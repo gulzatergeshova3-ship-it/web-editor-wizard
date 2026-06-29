@@ -1,29 +1,210 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { useSuspenseQueries } from "@tanstack/react-query";
+import { Calendar, MapPin, Atom, Brain, Leaf, Heart, Building2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
+import { Countdown } from "@/components/site/Countdown";
+import { RegistrationDialog } from "@/components/site/RegistrationDialog";
+import { settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery } from "@/lib/queries";
+import { useI18n, pickL, pickLArray } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Science Tech 2026 — Международная научная конференция" },
+      { name: "description", content: "Ведущая площадка для обмена научными достижениями и технологическими инновациями. 18 сентября 2026, Бишкек." },
+      { property: "og:title", content: "Science Tech 2026 — Международная научная конференция" },
+      { property: "og:description", content: "18 сентября 2026, Бишкек. Идеи. Инновации. Будущее." },
     ],
   }),
-  component: Index,
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(settingsQuery);
+    context.queryClient.ensureQueryData(sectionsQuery);
+    context.queryClient.ensureQueryData(speakersQuery);
+    context.queryClient.ensureQueryData(programQuery);
+    context.queryClient.ensureQueryData(partnersQuery);
+  },
+  component: LandingPage,
+  errorComponent: ({ error }) => <div className="p-8 text-center">Error: {error.message}</div>,
+  notFoundComponent: () => <div className="p-8">Not found</div>,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const iconMap: Record<string, any> = { brain: Brain, leaf: Leaf, heart: Heart, building: Building2, atom: Atom };
+
+function LandingPage() {
+  const { lang, tr } = useI18n();
+  const [regOpen, setRegOpen] = useState(false);
+  const [{ data: settings }, { data: sections }, { data: speakers }, { data: program }, { data: partners }] = useSuspenseQueries({
+    queries: [settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery],
+  });
+  const hero = settings.hero ?? {};
+  const about = settings.about ?? {};
+  const contacts = settings.contacts ?? {};
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen flex flex-col">
+      <Header onRegister={() => setRegOpen(true)} />
+
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-hero">
+        <div className="absolute inset-0 opacity-50 pointer-events-none [background-image:linear-gradient(oklch(0.9_0.02_240/.4)_1px,transparent_1px),linear-gradient(90deg,oklch(0.9_0.02_240/.4)_1px,transparent_1px)] [background-size:48px_48px]"></div>
+        <div className="relative mx-auto max-w-7xl px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
+              <Atom className="size-3.5" /> {pickL(hero.badge, lang)}
+            </span>
+            <h1 className="mt-5 text-4xl md:text-6xl font-bold leading-tight">
+              <span className="text-gradient-brand">{pickL(hero.title, lang)}</span>
+            </h1>
+            <p className="mt-4 text-lg text-muted-foreground">{pickL(hero.subtitle, lang)}</p>
+
+            <div className="mt-8 grid sm:grid-cols-2 gap-3">
+              <div className="rounded-xl border border-border bg-card p-4 flex gap-3">
+                <Calendar className="size-5 text-primary mt-0.5" />
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{tr("event_date_label")}</div>
+                  <div className="font-semibold text-sm">{pickL(hero.date_label, lang)}</div>
+                </div>
+              </div>
+              <div className="rounded-xl border border-border bg-card p-4 flex gap-3">
+                <MapPin className="size-5 text-primary mt-0.5" />
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{tr("location_label")}</div>
+                  <div className="font-semibold text-sm">{pickL(hero.location, lang)}</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button size="lg" onClick={() => setRegOpen(true)} className="bg-gradient-brand text-white border-0 shadow-brand">
+                {tr("register_long")}
+              </Button>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="aspect-square max-w-md mx-auto relative">
+              <div className="absolute inset-8 rounded-full border-2 border-primary/30 animate-spin [animation-duration:20s]"></div>
+              <div className="absolute inset-4 rounded-full border-2 border-cyan-400/40 animate-spin [animation-duration:14s] [animation-direction:reverse]"></div>
+              <div className="absolute inset-12 rounded-full border-2 border-emerald-400/30 animate-spin [animation-duration:24s]"></div>
+              <div className="absolute inset-0 grid place-items-center">
+                <div className="size-24 rounded-full bg-gradient-brand shadow-brand grid place-items-center">
+                  <Atom className="size-12 text-white" />
+                </div>
+              </div>
+            </div>
+            {hero.event_date && (
+              <div className="mt-6 max-w-md mx-auto">
+                <Countdown target={hero.event_date} />
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section id="about" className="py-20 bg-background">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold">{pickL(about.title, lang)}</h2>
+          <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+          <div className="mt-8 space-y-4 text-muted-foreground text-left md:text-center">
+            {pickLArray(about.paragraphs, lang).map((p, i) => <p key={i} className="leading-relaxed">{p}</p>)}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTIONS */}
+      <section id="sections" className="py-20 bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold">{tr("sections_title")}</h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl mx-auto">{tr("sections_subtitle")}</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {sections.map((s) => {
+              const Icon = iconMap[s.icon || "atom"] ?? Atom;
+              return (
+                <div key={s.id} className="group rounded-2xl border border-border bg-card p-6 hover:shadow-brand transition">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="size-12 rounded-xl bg-gradient-brand text-white grid place-items-center">
+                      <Icon className="size-6" />
+                    </div>
+                    <span className="text-3xl font-bold text-muted-foreground/30">{s.number}</span>
+                  </div>
+                  <h3 className="font-semibold text-lg">{pickL(s.title, lang)}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{pickL(s.description, lang)}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* PROGRAM */}
+      <section id="program" className="py-20">
+        <div className="mx-auto max-w-4xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold">{tr("program_title")}</h2>
+            <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+          </div>
+          <div className="space-y-3">
+            {program.map((p) => (
+              <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex gap-4 hover:shadow-brand transition">
+                <div className="shrink-0 w-32 font-mono text-sm text-primary font-semibold pt-0.5">{p.time_label}</div>
+                <div>
+                  <div className="font-semibold">{pickL(p.title, lang)}</div>
+                  {pickL(p.description, lang) && <div className="text-sm text-muted-foreground mt-1">{pickL(p.description, lang)}</div>}
+                  {p.speaker && <div className="text-xs text-primary mt-2">→ {p.speaker}</div>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SPEAKERS */}
+      <section id="speakers" className="py-20 bg-muted/30">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold">{tr("speakers_title")}</h2>
+            <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {speakers.map((s) => (
+              <div key={s.id} className="rounded-2xl border border-border bg-card p-5 text-center hover:shadow-brand transition">
+                <div className="size-24 mx-auto rounded-full bg-gradient-brand grid place-items-center text-white text-2xl font-bold overflow-hidden">
+                  {s.photo_url ? <img src={s.photo_url} alt={s.name} className="size-full object-cover"/> : s.name.split(" ").map(p => p[0]).slice(0, 2).join("")}
+                </div>
+                <div className="mt-4 font-semibold">{s.name}</div>
+                <div className="text-sm text-primary">{pickL(s.title, lang)}</div>
+                <p className="mt-2 text-xs text-muted-foreground">{pickL(s.bio, lang)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PARTNERS */}
+      <section id="partners" className="py-20">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold">{tr("partners_title")}</h2>
+            <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {partners.map((p) => (
+              <a key={p.id} href={p.url || "#"} target="_blank" rel="noreferrer" className="rounded-xl border border-border bg-card p-6 h-28 grid place-items-center text-center hover:shadow-brand transition">
+                {p.logo_url ? <img src={p.logo_url} alt={p.name} className="max-h-16"/> : <span className="font-semibold text-sm">{p.name}</span>}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Footer contacts={contacts} />
+      <RegistrationDialog open={regOpen} onOpenChange={setRegOpen} />
     </div>
   );
 }
