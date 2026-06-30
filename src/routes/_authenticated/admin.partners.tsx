@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/partners")({ component: Page });
