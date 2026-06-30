@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_setup_audit: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          reason: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          reason?: string | null
+          status: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          reason?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           created_at: string

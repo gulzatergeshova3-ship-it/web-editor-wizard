@@ -53,6 +53,7 @@ function AdminLayout() {
           </p>
           <div className="mt-6 flex gap-2 justify-center">
             <Button variant="outline" onClick={() => navigate({ to: "/" })}><Globe className="size-4 mr-2"/>На сайт</Button>
+            <Button variant="outline" onClick={() => navigate({ to: "/setup-admin" })}>Setup admin</Button>
             <Button onClick={logout}><LogOut className="size-4 mr-2"/>Выйти</Button>
           </div>
         </div>
