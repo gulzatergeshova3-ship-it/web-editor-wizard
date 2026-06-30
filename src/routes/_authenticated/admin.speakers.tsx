@@ -36,7 +36,7 @@ function Page() {
               <div><Label>Порядок</Label><Input type="number" value={it.sort_order} onChange={(e) => upd(it.id, { sort_order: +e.target.value })}/></div>
               <div className="col-span-2"><Label>Имя</Label><Input value={it.name} onChange={(e) => upd(it.id, { name: e.target.value })}/></div>
             </div>
-            <div><Label>URL фотографии</Label><Input value={it.photo_url ?? ""} onChange={(e) => upd(it.id, { photo_url: e.target.value })}/></div>
+            <ImageUpload label="Фотография" value={it.photo_url} folder="speakers" onChange={(url) => { upd(it.id, { photo_url: url }); supabase.from("speakers").update({ photo_url: url }).eq("id", it.id).then(() => {}); }}/>
             <LocalizedField label="Должность / организация" value={it.title} onChange={(v) => upd(it.id, { title: v })}/>
             <LocalizedField label="Био" value={it.bio} onChange={(v) => upd(it.id, { bio: v })} textarea/>
             <div className="flex gap-2">
