@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "Service role manages admin setup audit" ON public.admin_setup_audit;
