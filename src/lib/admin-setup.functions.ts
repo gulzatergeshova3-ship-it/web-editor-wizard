@@ -59,11 +59,21 @@ function getAdminClient(): AdminClient {
   });
 }
 
+async function sha256(value: string) {
+  const bytes = new TextEncoder().encode(value);
+  return new Uint8Array(await crypto.subtle.digest("SHA-256", bytes));
+}
+
 async function tokenMatches(providedToken: string, expectedToken: string) {
-  const { createHash, timingSafeEqual } = await import("node:crypto");
-  const provided = createHash("sha256").update(providedToken).digest();
-  const expected = createHash("sha256").update(expectedToken).digest();
-  return timingSafeEqual(provided, expected);
+  const provided = await sha256(providedToken);
+  const expected = await sha256(expectedToken);
+  let diff = provided.length ^ expected.length;
+
+  for (let i = 0; i < Math.max(provided.length, expected.length); i += 1) {
+    diff |= (provided[i] ?? 0) ^ (expected[i] ?? 0);
+  }
+
+  return diff === 0;
 }
 
 async function assertSetupToken(providedToken: string) {
