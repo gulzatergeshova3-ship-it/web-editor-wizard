@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/_authenticated/admin/partners")({ component: Page });
@@ -35,8 +36,8 @@ function Page() {
               <div className="md:col-span-2"><Label>Название</Label><Input value={it.name} onChange={(e) => upd(it.id, { name: e.target.value })}/></div>
               <div><Label>Уровень</Label><Input value={it.tier ?? ""} onChange={(e) => upd(it.id, { tier: e.target.value })}/></div>
             </div>
-            <div className="grid md:grid-cols-2 gap-3">
-              <div><Label>URL логотипа</Label><Input value={it.logo_url ?? ""} onChange={(e) => upd(it.id, { logo_url: e.target.value })}/></div>
+            <div className="grid md:grid-cols-2 gap-3 items-start">
+              <ImageUpload label="Логотип" value={it.logo_url} folder="partners" onChange={(url) => { upd(it.id, { logo_url: url }); supabase.from("partners").update({ logo_url: url }).eq("id", it.id).then(() => {}); }}/>
               <div><Label>Ссылка</Label><Input value={it.url ?? ""} onChange={(e) => upd(it.id, { url: e.target.value })}/></div>
             </div>
             <div className="flex gap-2">
