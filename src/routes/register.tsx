@@ -178,7 +178,7 @@ function RegisterPage() {
           )}
         </div>
       </main>
-      <Footer />
+      <Footer contacts={settings.contacts ?? {}} />
     </div>
   );
 }
