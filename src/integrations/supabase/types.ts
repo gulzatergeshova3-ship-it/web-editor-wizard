@@ -106,36 +106,51 @@ export type Database = {
       }
       registrations: {
         Row: {
+          consent_at: string | null
+          country: string | null
           created_at: string
           email: string
+          email_sent_at: string | null
           full_name: string
           id: string
           message: string | null
           organization: string | null
           phone: string | null
           position: string | null
+          qr_token: string | null
+          registration_code: string | null
           section: string | null
         }
         Insert: {
+          consent_at?: string | null
+          country?: string | null
           created_at?: string
           email: string
+          email_sent_at?: string | null
           full_name: string
           id?: string
           message?: string | null
           organization?: string | null
           phone?: string | null
           position?: string | null
+          qr_token?: string | null
+          registration_code?: string | null
           section?: string | null
         }
         Update: {
+          consent_at?: string | null
+          country?: string | null
           created_at?: string
           email?: string
+          email_sent_at?: string | null
           full_name?: string
           id?: string
           message?: string | null
           organization?: string | null
           phone?: string | null
           position?: string | null
+          qr_token?: string | null
+          registration_code?: string | null
           section?: string | null
         }
         Relationships: []
