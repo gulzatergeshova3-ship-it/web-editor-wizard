@@ -51,18 +51,17 @@ function LandingPage() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-hero">
         <div className="absolute inset-0 opacity-50 pointer-events-none [background-image:linear-gradient(oklch(0.9_0.02_240/.4)_1px,transparent_1px),linear-gradient(90deg,oklch(0.9_0.02_240/.4)_1px,transparent_1px)] [background-size:48px_48px]"></div>
-        <div className="relative mx-auto max-w-7xl px-4 py-20 lg:py-28 grid lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] gap-12 lg:gap-24 items-center">
-
-          <div className="lg:pr-4">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
               <Atom className="size-3.5" /> {pickL(hero.badge, lang)}
             </span>
-            <h1 className="mt-5 text-4xl md:text-6xl font-bold leading-tight tracking-tight">
+            <h1 className="mt-5 text-4xl md:text-6xl font-bold leading-tight">
               <span className="text-gradient-brand">{pickL(hero.title, lang)}</span>
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground max-w-xl">{pickL(hero.subtitle, lang)}</p>
+            <p className="mt-4 text-lg text-muted-foreground">{pickL(hero.subtitle, lang)}</p>
 
-            <div className="mt-8 grid sm:grid-cols-2 gap-3 max-w-xl">
+            <div className="mt-8 grid sm:grid-cols-2 gap-3">
               <div className="rounded-xl border border-border bg-card p-4 flex gap-3">
                 <Calendar className="size-5 text-primary mt-0.5" />
                 <div>
@@ -87,7 +86,8 @@ function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="aspect-square w-full max-w-[320px] sm:max-w-md md:max-w-lg lg:max-w-none mx-auto relative">
+            <div className="aspect-square w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto relative">
+              {/* Decorative squares (poster style) — sized relatively so they scale on mobile */}
               <div className="absolute top-0 right-[8%] w-[28%] aspect-square bg-cyan-300/50 rounded-sm"></div>
               <div className="absolute top-[16%] right-0 w-[18%] aspect-square bg-cyan-200/60 rounded-sm"></div>
               <div className="absolute top-[4%] right-[42%] w-[12%] aspect-square bg-cyan-400/30 rounded-sm"></div>
@@ -96,24 +96,25 @@ function LandingPage() {
               <div className="absolute top-1/2 left-0 w-[14%] aspect-square bg-cyan-300/30 rounded-sm"></div>
               <div className="absolute bottom-[24%] right-[4%] w-[11%] aspect-square bg-cyan-200/40 rounded-sm"></div>
 
+              {/* Spinning 3D atom — 80% width so rotation stays inside the box on every viewport */}
               <div className="absolute inset-0 grid place-items-center overflow-hidden">
                 <img
                   src={atom3dAsset.url}
                   alt="Science Tech Atom"
-                  className="w-[95%] h-[95%] object-contain drop-shadow-2xl relative z-10 animate-[spin_40s_linear_infinite] will-change-transform"
+                  className="w-[80%] h-[80%] object-contain drop-shadow-2xl relative z-10 animate-[spin_40s_linear_infinite] will-change-transform"
                   style={{ transformOrigin: "50% 50%", backfaceVisibility: "hidden" }}
                 />
               </div>
             </div>
 
+
             {hero.event_date && (
-              <div className="mt-8 max-w-md mx-auto">
+              <div className="mt-6 max-w-md mx-auto">
                 <Countdown target={hero.event_date} />
               </div>
             )}
           </div>
         </div>
-
       </section>
 
       {/* ABOUT */}
