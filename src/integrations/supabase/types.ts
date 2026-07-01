@@ -106,6 +106,8 @@ export type Database = {
       }
       registrations: {
         Row: {
+          checked_in_at: string | null
+          checked_in_by: string | null
           consent_at: string | null
           country: string | null
           created_at: string
@@ -124,6 +126,8 @@ export type Database = {
           section: string | null
         }
         Insert: {
+          checked_in_at?: string | null
+          checked_in_by?: string | null
           consent_at?: string | null
           country?: string | null
           created_at?: string
@@ -142,6 +146,8 @@ export type Database = {
           section?: string | null
         }
         Update: {
+          checked_in_at?: string | null
+          checked_in_by?: string | null
           consent_at?: string | null
           country?: string | null
           created_at?: string
@@ -271,6 +277,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      checkin_registration: { Args: { _token: string }; Returns: Json }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
