@@ -184,15 +184,24 @@ function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold">{tr("speakers_title")}</h2>
             <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {speakers.map((s) => (
-              <div key={s.id} className="rounded-2xl border border-border bg-card p-5 text-center hover:shadow-brand transition">
-                <div className="size-24 mx-auto rounded-full bg-gradient-brand grid place-items-center text-white text-2xl font-bold overflow-hidden">
-                  {s.photo_url ? <img src={s.photo_url} alt={s.name} className="size-full object-cover"/> : s.name.split(" ").map(p => p[0]).slice(0, 2).join("")}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {speakers.map((s, i) => (
+              <div key={s.id} className="group">
+                <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-muted">
+                  {s.photo_url ? (
+                    <img src={s.photo_url} alt={s.name} className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                  ) : (
+                    <div className="absolute inset-0 grid place-items-center bg-gradient-brand text-white text-4xl font-bold">
+                      {s.name.split(" ").map(p => p[0]).slice(0, 2).join("")}
+                    </div>
+                  )}
+                  <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 text-[11px] font-mono tracking-[0.2em] text-white uppercase drop-shadow-md">
+                    <span>SPK · {String(i + 1).padStart(2, "0")}</span>
+                  </div>
                 </div>
-                <div className="mt-4 font-semibold">{s.name}</div>
-                <div className="text-sm text-primary">{pickL(s.title, lang)}</div>
-                <p className="mt-2 text-xs text-muted-foreground">{pickL(s.bio, lang)}</p>
+                <div className="mt-4 font-semibold text-base">{s.name}</div>
+                <div className="text-sm text-primary mt-1">{pickL(s.title, lang)}</div>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{pickL(s.bio, lang)}</p>
               </div>
             ))}
           </div>
