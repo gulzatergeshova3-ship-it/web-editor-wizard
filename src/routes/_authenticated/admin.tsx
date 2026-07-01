@@ -19,6 +19,7 @@ const nav = [
   { to: "/admin/speakers", label: "Спикеры", icon: Users },
   { to: "/admin/program", label: "Программа", icon: Calendar },
   { to: "/admin/partners", label: "Партнёры", icon: Building2 },
+  { to: "/admin/footer", label: "Footer Settings", icon: PanelBottom },
   { to: "/admin/registrations", label: "Заявки (raw)", icon: Mail },
 ];
 
