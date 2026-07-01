@@ -96,6 +96,7 @@ function RegisterPage() {
     // Fire-and-forget email; ignore errors on the client
     sendRegistrationEmail({
       data: {
+        registration_id: data.id,
         registration_code: code,
         full_name: data.full_name,
         email: data.email,
