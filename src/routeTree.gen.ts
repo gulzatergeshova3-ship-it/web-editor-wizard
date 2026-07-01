@@ -23,6 +23,7 @@ import { Route as AuthenticatedAdminProgramRouteImport } from './routes/_authent
 import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin.partners'
 import { Route as AuthenticatedAdminParticipantsRouteImport } from './routes/_authenticated/admin.participants'
 import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authenticated/admin.hero'
+import { Route as AuthenticatedAdminFooterRouteImport } from './routes/_authenticated/admin.footer'
 import { Route as AuthenticatedAdminCheckinRouteImport } from './routes/_authenticated/admin.checkin'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
 
@@ -101,6 +102,12 @@ const AuthenticatedAdminHeroRoute = AuthenticatedAdminHeroRouteImport.update({
   path: '/hero',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminFooterRoute =
+  AuthenticatedAdminFooterRouteImport.update({
+    id: '/footer',
+    path: '/footer',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminCheckinRoute =
   AuthenticatedAdminCheckinRouteImport.update({
     id: '/checkin',
@@ -121,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
+  '/admin/footer': typeof AuthenticatedAdminFooterRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
   '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
@@ -137,6 +145,7 @@ export interface FileRoutesByTo {
   '/setup-admin': typeof SetupAdminRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
+  '/admin/footer': typeof AuthenticatedAdminFooterRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
   '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
@@ -156,6 +165,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/checkin': typeof AuthenticatedAdminCheckinRoute
+  '/_authenticated/admin/footer': typeof AuthenticatedAdminFooterRoute
   '/_authenticated/admin/hero': typeof AuthenticatedAdminHeroRoute
   '/_authenticated/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/about'
     | '/admin/checkin'
+    | '/admin/footer'
     | '/admin/hero'
     | '/admin/participants'
     | '/admin/partners'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/setup-admin'
     | '/admin/about'
     | '/admin/checkin'
+    | '/admin/footer'
     | '/admin/hero'
     | '/admin/participants'
     | '/admin/partners'
@@ -209,6 +221,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/checkin'
+    | '/_authenticated/admin/footer'
     | '/_authenticated/admin/hero'
     | '/_authenticated/admin/participants'
     | '/_authenticated/admin/partners'
@@ -327,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminHeroRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/footer': {
+      id: '/_authenticated/admin/footer'
+      path: '/footer'
+      fullPath: '/admin/footer'
+      preLoaderRoute: typeof AuthenticatedAdminFooterRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/checkin': {
       id: '/_authenticated/admin/checkin'
       path: '/checkin'
@@ -347,6 +367,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
   AuthenticatedAdminCheckinRoute: typeof AuthenticatedAdminCheckinRoute
+  AuthenticatedAdminFooterRoute: typeof AuthenticatedAdminFooterRoute
   AuthenticatedAdminHeroRoute: typeof AuthenticatedAdminHeroRoute
   AuthenticatedAdminParticipantsRoute: typeof AuthenticatedAdminParticipantsRoute
   AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
@@ -360,6 +381,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
   AuthenticatedAdminCheckinRoute: AuthenticatedAdminCheckinRoute,
+  AuthenticatedAdminFooterRoute: AuthenticatedAdminFooterRoute,
   AuthenticatedAdminHeroRoute: AuthenticatedAdminHeroRoute,
   AuthenticatedAdminParticipantsRoute: AuthenticatedAdminParticipantsRoute,
   AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,

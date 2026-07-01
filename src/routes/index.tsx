@@ -245,7 +245,7 @@ function LandingPage() {
       </section>
 
 
-      <Footer contacts={contacts} />
+      <Footer contacts={contacts} footer={settings.footer} />
       <RegistrationDialog open={regOpen} onOpenChange={setRegOpen} />
     </div>
   );
