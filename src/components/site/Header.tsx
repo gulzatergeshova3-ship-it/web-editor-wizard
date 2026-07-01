@@ -17,7 +17,7 @@ export function Header({ onRegister }: { onRegister: () => void }) {
   ];
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
-      <div className="mx-auto max-w-7xl px-4 h-16 flex items-center gap-4">
+      <div className="mx-auto max-w-7xl px-4 h-20 md:h-24 flex items-center gap-4">
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img src={logo.url} alt="Science Tech 2026" className="h-16 md:h-20 w-auto object-contain" />
         </Link>
