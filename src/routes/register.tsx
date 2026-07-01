@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import QRCode from "qrcode";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { CheckCircle2, Loader2, Download, ArrowLeft, Calendar, MapPin } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -10,8 +11,10 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
+import { settingsQuery } from "@/lib/queries";
 import { toast } from "sonner";
 import { sendRegistrationEmail } from "@/lib/registration-email.functions";
+
 import logo from "@/assets/science-tech-logo-t.png.asset.json";
 
 export const Route = createFileRoute("/register")({
