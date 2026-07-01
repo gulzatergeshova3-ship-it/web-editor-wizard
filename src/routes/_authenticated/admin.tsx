@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Image, FileText, Layers, Users, Calendar, Building2, Mail, LogOut, Globe, Atom, ScanLine, UserCheck } from "lucide-react";
+import { LayoutDashboard, Image, FileText, Layers, Users, Calendar, Building2, Mail, LogOut, Globe, Atom, ScanLine, UserCheck, PanelBottom } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -19,6 +19,7 @@ const nav = [
   { to: "/admin/speakers", label: "Спикеры", icon: Users },
   { to: "/admin/program", label: "Программа", icon: Calendar },
   { to: "/admin/partners", label: "Партнёры", icon: Building2 },
+  { to: "/admin/footer", label: "Footer Settings", icon: PanelBottom },
   { to: "/admin/registrations", label: "Заявки (raw)", icon: Mail },
 ];
 
