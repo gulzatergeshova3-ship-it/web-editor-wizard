@@ -41,9 +41,10 @@ export function Header({ onRegister }: { onRegister: () => void }) {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={onRegister} className="bg-gradient-brand text-white hover:opacity-90 border-0">
-            {tr("register")}
+          <Button asChild className="bg-gradient-brand text-white hover:opacity-90 border-0">
+            <Link to="/register">{tr("register")}</Link>
           </Button>
+
         </div>
       </div>
     </header>
