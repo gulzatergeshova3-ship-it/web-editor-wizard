@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Image, FileText, Layers, Users, Calendar, Building2, Mail, LogOut, Globe, Atom } from "lucide-react";
+import { LayoutDashboard, Image, FileText, Layers, Users, Calendar, Building2, Mail, LogOut, Globe, Atom, ScanLine, UserCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -11,13 +11,15 @@ export const Route = createFileRoute("/_authenticated/admin")({
 
 const nav = [
   { to: "/admin", label: "Дашборд", icon: LayoutDashboard, exact: true },
+  { to: "/admin/participants", label: "Participants", icon: UserCheck },
+  { to: "/admin/checkin", label: "Check-in", icon: ScanLine },
   { to: "/admin/hero", label: "Hero / шапка", icon: Image },
   { to: "/admin/about", label: "О конференции", icon: FileText },
   { to: "/admin/sections", label: "Направления", icon: Layers },
   { to: "/admin/speakers", label: "Спикеры", icon: Users },
   { to: "/admin/program", label: "Программа", icon: Calendar },
   { to: "/admin/partners", label: "Партнёры", icon: Building2 },
-  { to: "/admin/registrations", label: "Заявки", icon: Mail },
+  { to: "/admin/registrations", label: "Заявки (raw)", icon: Mail },
 ];
 
 function AdminLayout() {

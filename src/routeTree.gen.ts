@@ -21,7 +21,9 @@ import { Route as AuthenticatedAdminSectionsRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminRegistrationsRouteImport } from './routes/_authenticated/admin.registrations'
 import { Route as AuthenticatedAdminProgramRouteImport } from './routes/_authenticated/admin.program'
 import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin.partners'
+import { Route as AuthenticatedAdminParticipantsRouteImport } from './routes/_authenticated/admin.participants'
 import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authenticated/admin.hero'
+import { Route as AuthenticatedAdminCheckinRouteImport } from './routes/_authenticated/admin.checkin'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
 
 const SetupAdminRoute = SetupAdminRouteImport.update({
@@ -88,11 +90,23 @@ const AuthenticatedAdminPartnersRoute =
     path: '/partners',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminParticipantsRoute =
+  AuthenticatedAdminParticipantsRouteImport.update({
+    id: '/participants',
+    path: '/participants',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminHeroRoute = AuthenticatedAdminHeroRouteImport.update({
   id: '/hero',
   path: '/hero',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminCheckinRoute =
+  AuthenticatedAdminCheckinRouteImport.update({
+    id: '/checkin',
+    path: '/checkin',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -106,7 +120,9 @@ export interface FileRoutesByFullPath {
   '/setup-admin': typeof SetupAdminRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/program': typeof AuthenticatedAdminProgramRoute
   '/admin/registrations': typeof AuthenticatedAdminRegistrationsRoute
@@ -120,7 +136,9 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/setup-admin': typeof SetupAdminRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/program': typeof AuthenticatedAdminProgramRoute
   '/admin/registrations': typeof AuthenticatedAdminRegistrationsRoute
@@ -137,7 +155,9 @@ export interface FileRoutesById {
   '/setup-admin': typeof SetupAdminRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/checkin': typeof AuthenticatedAdminCheckinRoute
   '/_authenticated/admin/hero': typeof AuthenticatedAdminHeroRoute
+  '/_authenticated/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/_authenticated/admin/program': typeof AuthenticatedAdminProgramRoute
   '/_authenticated/admin/registrations': typeof AuthenticatedAdminRegistrationsRoute
@@ -154,7 +174,9 @@ export interface FileRouteTypes {
     | '/setup-admin'
     | '/admin'
     | '/admin/about'
+    | '/admin/checkin'
     | '/admin/hero'
+    | '/admin/participants'
     | '/admin/partners'
     | '/admin/program'
     | '/admin/registrations'
@@ -168,7 +190,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/setup-admin'
     | '/admin/about'
+    | '/admin/checkin'
     | '/admin/hero'
+    | '/admin/participants'
     | '/admin/partners'
     | '/admin/program'
     | '/admin/registrations'
@@ -184,7 +208,9 @@ export interface FileRouteTypes {
     | '/setup-admin'
     | '/_authenticated/admin'
     | '/_authenticated/admin/about'
+    | '/_authenticated/admin/checkin'
     | '/_authenticated/admin/hero'
+    | '/_authenticated/admin/participants'
     | '/_authenticated/admin/partners'
     | '/_authenticated/admin/program'
     | '/_authenticated/admin/registrations'
@@ -287,11 +313,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPartnersRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/participants': {
+      id: '/_authenticated/admin/participants'
+      path: '/participants'
+      fullPath: '/admin/participants'
+      preLoaderRoute: typeof AuthenticatedAdminParticipantsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/hero': {
       id: '/_authenticated/admin/hero'
       path: '/hero'
       fullPath: '/admin/hero'
       preLoaderRoute: typeof AuthenticatedAdminHeroRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/checkin': {
+      id: '/_authenticated/admin/checkin'
+      path: '/checkin'
+      fullPath: '/admin/checkin'
+      preLoaderRoute: typeof AuthenticatedAdminCheckinRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
     '/_authenticated/admin/about': {
@@ -306,7 +346,9 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminCheckinRoute: typeof AuthenticatedAdminCheckinRoute
   AuthenticatedAdminHeroRoute: typeof AuthenticatedAdminHeroRoute
+  AuthenticatedAdminParticipantsRoute: typeof AuthenticatedAdminParticipantsRoute
   AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
   AuthenticatedAdminProgramRoute: typeof AuthenticatedAdminProgramRoute
   AuthenticatedAdminRegistrationsRoute: typeof AuthenticatedAdminRegistrationsRoute
@@ -317,7 +359,9 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+  AuthenticatedAdminCheckinRoute: AuthenticatedAdminCheckinRoute,
   AuthenticatedAdminHeroRoute: AuthenticatedAdminHeroRoute,
+  AuthenticatedAdminParticipantsRoute: AuthenticatedAdminParticipantsRoute,
   AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
   AuthenticatedAdminProgramRoute: AuthenticatedAdminProgramRoute,
   AuthenticatedAdminRegistrationsRoute: AuthenticatedAdminRegistrationsRoute,
