@@ -38,8 +38,10 @@ interface SuccessData {
 
 function RegisterPage() {
   const { tr } = useI18n();
+  const { data: settings } = useSuspenseQuery(settingsQuery);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
+
   const [form, setForm] = useState({
     full_name: "",
     email: "",
