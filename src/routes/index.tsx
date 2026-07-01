@@ -51,7 +51,7 @@ function LandingPage() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-hero">
         <div className="absolute inset-0 opacity-50 pointer-events-none [background-image:linear-gradient(oklch(0.9_0.02_240/.4)_1px,transparent_1px),linear-gradient(90deg,oklch(0.9_0.02_240/.4)_1px,transparent_1px)] [background-size:48px_48px]"></div>
-        <div className="relative mx-auto max-w-7xl px-4 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="relative mx-auto max-w-7xl px-4 pt-16 lg:pt-24 pb-4 lg:pb-6 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
               <Atom className="size-3.5" /> {pickL(hero.badge, lang)}
