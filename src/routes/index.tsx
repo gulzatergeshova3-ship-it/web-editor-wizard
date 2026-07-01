@@ -9,6 +9,7 @@ import { Countdown } from "@/components/site/Countdown";
 import { RegistrationDialog } from "@/components/site/RegistrationDialog";
 import { settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery } from "@/lib/queries";
 import { useI18n, pickL, pickLArray } from "@/lib/i18n";
+import atom3dAsset from "@/assets/atom-3d.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
