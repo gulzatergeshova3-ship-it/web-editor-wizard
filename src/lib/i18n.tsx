@@ -66,6 +66,7 @@ export const t: Dict = {
   save: { ru: "Сохранить", en: "Save", kg: "Сактоо" },
   delete: { ru: "Удалить", en: "Delete", kg: "Өчүрүү" },
   add: { ru: "Добавить", en: "Add", kg: "Кошуу" },
+  quick_links: { ru: "Конференция", en: "Conference", kg: "Конференция" },
 
 };
 
