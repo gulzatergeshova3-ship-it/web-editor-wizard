@@ -62,7 +62,7 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
         {/* Quick links */}
         {quickLinks.length > 0 && (
           <div className="text-sm">
-            <div className="font-semibold mb-2">{tr("quick_links") || "Быстрые ссылки"}</div>
+            <div className="font-semibold mb-2">{tr("quick_links")}</div>
             <ul className="space-y-1.5">
               {quickLinks.map((l: any) => (
                 <li key={l.id}>
