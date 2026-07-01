@@ -193,15 +193,34 @@ function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold">{tr("partners_title")}</h2>
             <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {partners.map((p) => (
-              <a key={p.id} href={p.url || "#"} target="_blank" rel="noreferrer" className="rounded-xl border border-border bg-card p-6 h-28 grid place-items-center text-center hover:shadow-brand transition">
-                {p.logo_url ? <img src={p.logo_url} alt={p.name} className="max-h-16"/> : <span className="font-semibold text-sm">{p.name}</span>}
+        </div>
+        <div className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+            {[...partners, ...partners].map((p, i) => (
+              <a
+                key={`${p.id}-${i}`}
+                href={p.url || "#"}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={p.name}
+                className="shrink-0 mx-[40px] md:mx-[50px] grid place-items-center"
+              >
+                {p.logo_url ? (
+                  <img
+                    src={p.logo_url}
+                    alt={p.name}
+                    className="h-10 md:h-14 w-auto object-contain"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className="font-semibold text-sm text-muted-foreground">{p.name}</span>
+                )}
               </a>
             ))}
           </div>
         </div>
       </section>
+
 
       <Footer contacts={contacts} />
       <RegistrationDialog open={regOpen} onOpenChange={setRegOpen} />
