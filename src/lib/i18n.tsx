@@ -33,15 +33,28 @@ export const t: Dict = {
   program_title: { ru: "Программа", en: "Program", kg: "Программа" },
   partners_title: { ru: "Партнёры", en: "Partners", kg: "Өнөктөштөр" },
   contacts_title: { ru: "Контакты", en: "Contacts", kg: "Байланыш" },
-  reg_full_name: { ru: "Полное имя", en: "Full name", kg: "Толук аты" },
+  reg_full_name: { ru: "ФИО", en: "Full name", kg: "Толук аты-жөнү" },
   reg_email: { ru: "Email", en: "Email", kg: "Email" },
   reg_phone: { ru: "Телефон", en: "Phone", kg: "Телефон" },
-  reg_org: { ru: "Организация", en: "Organization", kg: "Уюм" },
+  reg_org: { ru: "Организация / Компания", en: "Organization / Company", kg: "Уюм / Компания" },
   reg_position: { ru: "Должность", en: "Position", kg: "Кызматы" },
+  reg_country: { ru: "Страна", en: "Country", kg: "Өлкө" },
   reg_section: { ru: "Интересующая секция", en: "Track of interest", kg: "Кызыктуу багыт" },
   reg_message: { ru: "Комментарий", en: "Message", kg: "Комментарий" },
-  reg_submit: { ru: "Отправить заявку", en: "Submit", kg: "Жөнөтүү" },
-  reg_success: { ru: "Заявка отправлена!", en: "Registration submitted!", kg: "Билдирүү жөнөтүлдү!" },
+  reg_consent: {
+    ru: "Я согласен(на) с обработкой персональных данных.",
+    en: "I agree to the processing of my personal data.",
+    kg: "Жеке маалыматтарды иштетүүгө макулмун.",
+  },
+  reg_submit: { ru: "Зарегистрироваться", en: "Register", kg: "Катталуу" },
+  reg_success_title: { ru: "Спасибо за регистрацию!", en: "Thank you for registering!", kg: "Катталууңуз үчүн рахмат!" },
+  reg_success_msg: {
+    ru: "На ваш email отправлено письмо с подтверждением и персональным QR-кодом. Пожалуйста, сохраните QR-код — он понадобится для входа на конференцию.",
+    en: "A confirmation email with your personal QR code has been sent. Please keep the QR code — you will need it to enter the conference.",
+    kg: "Электрондук почтаңызга ырастоо каты жана жеке QR-кодуңуз жөнөтүлдү. QR-кодду сактап коюңуз — ал конференцияга кирүү үчүн керек болот.",
+  },
+  reg_your_id: { ru: "Ваш регистрационный ID", en: "Your registration ID", kg: "Каттоо ID" },
+  reg_download_qr: { ru: "Скачать QR-код", en: "Download QR code", kg: "QR-кодду жүктөө" },
   reg_dialog_title: { ru: "Регистрация на конференцию", en: "Conference registration", kg: "Конференцияга катталуу" },
   admin: { ru: "Кабинет админа", en: "Admin", kg: "Админ" },
   login: { ru: "Войти", en: "Sign in", kg: "Кирүү" },
@@ -53,6 +66,7 @@ export const t: Dict = {
   save: { ru: "Сохранить", en: "Save", kg: "Сактоо" },
   delete: { ru: "Удалить", en: "Delete", kg: "Өчүрүү" },
   add: { ru: "Добавить", en: "Add", kg: "Кошуу" },
+
 };
 
 interface I18nCtx { lang: Lang; setLang: (l: Lang) => void; tr: (k: string) => string; }

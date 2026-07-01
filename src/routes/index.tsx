@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { Calendar, MapPin, Atom, Brain, Leaf, Heart, Building2 } from "lucide-react";
@@ -79,9 +79,10 @@ function LandingPage() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button size="lg" onClick={() => setRegOpen(true)} className="bg-gradient-brand text-white border-0 shadow-brand">
-                {tr("register_long")}
+              <Button asChild size="lg" className="bg-gradient-brand text-white border-0 shadow-brand">
+                <Link to="/register">{tr("register_long")}</Link>
               </Button>
+
             </div>
           </div>
 

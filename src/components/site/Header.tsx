@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useI18n, LANGS, type Lang } from "@/lib/i18n";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
-export function Header({ onRegister }: { onRegister: () => void }) {
+export function Header({ onRegister: _onRegister }: { onRegister?: () => void } = {}) {
   const { tr, lang, setLang } = useI18n();
   const links = [
     { href: "#about", label: tr("nav_about") },
@@ -41,9 +41,10 @@ export function Header({ onRegister }: { onRegister: () => void }) {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button onClick={onRegister} className="bg-gradient-brand text-white hover:opacity-90 border-0">
-            {tr("register")}
+          <Button asChild className="bg-gradient-brand text-white hover:opacity-90 border-0">
+            <Link to="/register">{tr("register")}</Link>
           </Button>
+
         </div>
       </div>
     </header>
