@@ -86,28 +86,26 @@ function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="aspect-square max-w-md mx-auto relative">
+            <div className="aspect-square max-w-lg mx-auto relative">
               {/* Decorative squares (poster style) */}
-              <div className="absolute top-0 right-6 size-24 bg-cyan-300/40 rounded-sm"></div>
-              <div className="absolute top-10 right-0 size-16 bg-cyan-200/50 rounded-sm"></div>
-              <div className="absolute bottom-8 left-2 size-20 bg-cyan-300/30 rounded-sm"></div>
-              <div className="absolute bottom-0 left-24 size-12 bg-cyan-200/40 rounded-sm"></div>
-              <div className="absolute top-1/2 left-0 size-14 bg-cyan-300/25 rounded-sm"></div>
-
-              {/* Orbit rings */}
-              <div className="absolute inset-8 rounded-full border-2 border-primary/30 animate-spin [animation-duration:20s]"></div>
-              <div className="absolute inset-4 rounded-full border-2 border-cyan-400/40 animate-spin [animation-duration:14s] [animation-direction:reverse]"></div>
-              <div className="absolute inset-12 rounded-full border-2 border-emerald-400/30 animate-spin [animation-duration:24s]"></div>
+              <div className="absolute top-0 right-8 size-32 bg-cyan-300/50 rounded-sm"></div>
+              <div className="absolute top-16 right-0 size-20 bg-cyan-200/60 rounded-sm"></div>
+              <div className="absolute top-4 right-40 size-14 bg-cyan-400/30 rounded-sm"></div>
+              <div className="absolute bottom-10 left-2 size-24 bg-cyan-300/40 rounded-sm"></div>
+              <div className="absolute bottom-0 left-28 size-16 bg-cyan-200/50 rounded-sm"></div>
+              <div className="absolute top-1/2 left-0 size-16 bg-cyan-300/30 rounded-sm"></div>
+              <div className="absolute bottom-24 right-4 size-12 bg-cyan-200/40 rounded-sm"></div>
 
               {/* Spinning 3D atom */}
               <div className="absolute inset-0 grid place-items-center">
                 <img
                   src={atom3dAsset.url}
                   alt="Science Tech Atom"
-                  className="size-64 md:size-80 object-contain animate-spin [animation-duration:18s] drop-shadow-2xl"
+                  className="w-full h-full object-contain animate-spin [animation-duration:18s] drop-shadow-2xl relative z-10"
                 />
               </div>
             </div>
+
             {hero.event_date && (
               <div className="mt-6 max-w-md mx-auto">
                 <Countdown target={hero.event_date} />
