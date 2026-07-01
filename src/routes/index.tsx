@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useSuspenseQueries } from "@tanstack/react-query";
 import { Calendar, MapPin, Atom, Brain, Leaf, Heart, Building2 } from "lucide-react";
