@@ -80,10 +80,9 @@ function LandingPage() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-gradient-brand text-white border-0 shadow-brand">
-                <a href="/register" onClick={(e) => { e.preventDefault(); window.location.href = "/register"; }}>
-
-                {tr("register_long")}
+                <Link to="/register">{tr("register_long")}</Link>
               </Button>
+
             </div>
           </div>
 
