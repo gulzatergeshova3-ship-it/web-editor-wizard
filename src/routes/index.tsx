@@ -86,7 +86,7 @@ function LandingPage() {
             </div>
           </div>
 
-          <div className="relative lg:translate-y-8">
+          <div className="relative">
             <div className="aspect-square w-full max-w-[320px] sm:max-w-md md:max-w-lg lg:max-w-none mx-auto relative">
               <div className="absolute top-0 right-[8%] w-[28%] aspect-square bg-cyan-300/50 rounded-sm"></div>
               <div className="absolute top-[16%] right-0 w-[18%] aspect-square bg-cyan-200/60 rounded-sm"></div>
