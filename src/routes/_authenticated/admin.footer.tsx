@@ -97,7 +97,7 @@ function Page() {
       {/* QUICK LINKS */}
       <section className="rounded-xl border border-border bg-card p-5 space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold">Быстрые ссылки</h2>
+          <h2 className="text-lg font-bold">Конференция</h2>
           <Button variant="outline" size="sm" onClick={() => updLinks([...links, { id: crypto.randomUUID(), label: {}, url: "", visible: true, sort_order: links.length + 1 }])}>
             <Plus className="size-4 mr-1" /> Добавить
           </Button>
