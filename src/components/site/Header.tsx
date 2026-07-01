@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Globe } from "lucide-react";
-import logo from "@/assets/science-tech-logo.jpg.asset.json";
+import logo from "@/assets/science-tech-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { useI18n, LANGS, type Lang } from "@/lib/i18n";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -18,8 +18,8 @@ export function Header({ onRegister }: { onRegister: () => void }) {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto max-w-7xl px-4 h-16 flex items-center gap-4">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo.url} alt="Science Tech 2026" className="h-11 w-auto object-contain" />
+        <Link to="/" className="flex items-center gap-2 shrink-0">
+          <img src={logo.url} alt="Science Tech 2026" className="h-16 md:h-20 w-auto object-contain" />
         </Link>
         <nav className="hidden lg:flex items-center gap-6 ml-6 text-sm">
           {links.map((l) => (
