@@ -152,7 +152,7 @@ function ResultView({ result }: { result: Result | null }) {
     </Card>
   );
   return (
-    <Card color="red" icon={<XCircle className="size-10"/>} title="Ошибка" subtitle={result.message} />
+    <Card color="red" icon={<XCircle className="size-10"/>} title="Ошибка" subtitle={result.kind === "error" ? result.message : ""} />
   );
 }
 
