@@ -52,6 +52,7 @@ function LandingPage() {
       <section className="relative overflow-hidden bg-hero">
         <div className="absolute inset-0 opacity-50 pointer-events-none [background-image:linear-gradient(oklch(0.9_0.02_240/.4)_1px,transparent_1px),linear-gradient(90deg,oklch(0.9_0.02_240/.4)_1px,transparent_1px)] [background-size:48px_48px]"></div>
         <div className="relative mx-auto max-w-7xl px-4 py-20 lg:py-28 grid lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] gap-12 lg:gap-24 items-center">
+
           <div className="lg:pr-4">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
               <Atom className="size-3.5" /> {pickL(hero.badge, lang)}
@@ -85,7 +86,7 @@ function LandingPage() {
             </div>
           </div>
 
-          <div className="relative lg:translate-y-8">
+          <div className="relative">
             <div className="aspect-square w-full max-w-[320px] sm:max-w-md md:max-w-lg lg:max-w-none mx-auto relative">
               <div className="absolute top-0 right-[8%] w-[28%] aspect-square bg-cyan-300/50 rounded-sm"></div>
               <div className="absolute top-[16%] right-0 w-[18%] aspect-square bg-cyan-200/60 rounded-sm"></div>
