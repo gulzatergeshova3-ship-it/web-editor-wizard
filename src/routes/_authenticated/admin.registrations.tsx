@@ -28,12 +28,13 @@ function Page() {
           <thead className="bg-muted/50 text-left">
             <tr>
               <th className="p-3">Дата</th>
+              <th className="p-3">Код</th>
               <th className="p-3">Имя</th>
               <th className="p-3">Email</th>
               <th className="p-3">Телефон</th>
               <th className="p-3">Организация</th>
-              <th className="p-3">Секция</th>
-              <th className="p-3">Сообщение</th>
+              <th className="p-3">Страна</th>
+              <th className="p-3">Письмо</th>
               <th className="p-3"></th>
             </tr>
           </thead>
@@ -41,19 +42,26 @@ function Page() {
             {items.map((r) => (
               <tr key={r.id} className="border-t border-border">
                 <td className="p-3 whitespace-nowrap text-muted-foreground">{new Date(r.created_at).toLocaleString()}</td>
+                <td className="p-3 font-mono text-xs">{r.registration_code}</td>
                 <td className="p-3 font-medium">{r.full_name}</td>
                 <td className="p-3"><a className="text-primary" href={`mailto:${r.email}`}>{r.email}</a></td>
                 <td className="p-3">{r.phone}</td>
                 <td className="p-3">{r.organization}</td>
-                <td className="p-3">{r.section}</td>
-                <td className="p-3 max-w-xs truncate" title={r.message}>{r.message}</td>
+                <td className="p-3">{r.country}</td>
+                <td className="p-3"><EmailStatus status={r.email_status} error={r.email_error} sentAt={r.email_sent_at} /></td>
                 <td className="p-3"><Button size="sm" variant="destructive" onClick={() => del(r.id)}><Trash2 className="size-4"/></Button></td>
               </tr>
             ))}
-            {items.length === 0 && <tr><td colSpan={8} className="p-8 text-center text-muted-foreground">Пока нет заявок</td></tr>}
+            {items.length === 0 && <tr><td colSpan={9} className="p-8 text-center text-muted-foreground">Пока нет заявок</td></tr>}
           </tbody>
         </table>
       </div>
     </div>
   );
+}
+
+function EmailStatus({ status, error, sentAt }: { status?: string | null; error?: string | null; sentAt?: string | null }) {
+  if (status === "sent") return <span className="inline-flex items-center rounded-full bg-emerald-500/10 text-emerald-600 px-2 py-0.5 text-xs" title={sentAt ?? ""}>Отправлено</span>;
+  if (status === "failed") return <span className="inline-flex items-center rounded-full bg-red-500/10 text-red-600 px-2 py-0.5 text-xs" title={error ?? ""}>Ошибка</span>;
+  return <span className="inline-flex items-center rounded-full bg-amber-500/10 text-amber-600 px-2 py-0.5 text-xs">Ожидает</span>;
 }

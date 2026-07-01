@@ -72,7 +72,7 @@ function RegisterPage() {
         position: form.position.trim() || null,
         country: form.country.trim() || null,
       })
-      .select("registration_code, qr_token, full_name, email")
+      .select("id, registration_code, qr_token, full_name, email")
       .single();
 
     if (error || !data) {
@@ -96,6 +96,7 @@ function RegisterPage() {
     // Fire-and-forget email; ignore errors on the client
     sendRegistrationEmail({
       data: {
+        registration_id: data.id,
         registration_code: code,
         full_name: data.full_name,
         email: data.email,

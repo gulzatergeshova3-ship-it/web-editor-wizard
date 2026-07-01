@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const schema = z.object({
+  registration_id: z.string().uuid(),
   registration_code: z.string().min(1),
   full_name: z.string().min(1),
   email: z.string().email(),
@@ -10,8 +11,10 @@ const schema = z.object({
 
 const EVENT_DATE = "18 сентября 2026";
 const EVENT_LOCATION = "Бишкек, Кыргызстан";
-const LOGO_URL =
-  "https://science-tech-2026-conference-135891015828.asia-southeast1.run.app/logo.png";
+
+function escape(s: string) {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
+}
 
 function renderHtml(input: z.infer<typeof schema>) {
   return `<!doctype html>
@@ -38,7 +41,7 @@ function renderHtml(input: z.infer<typeof schema>) {
               <span style="font-family:ui-monospace,monospace">${input.registration_code}</span></td></tr>
           </table>
           <div style="text-align:center;margin:24px 0 12px">
-            <img src="${input.qr_data_url}" alt="QR" width="240" height="240"
+            <img src="cid:qr@sciencetech" alt="QR" width="240" height="240"
               style="border:1px solid #e2e8f0;border-radius:12px;padding:8px;background:#fff" />
           </div>
           <p style="margin:8px 0 0;color:#475569;line-height:1.55;text-align:center">
@@ -54,41 +57,73 @@ function renderHtml(input: z.infer<typeof schema>) {
 </body></html>`;
 }
 
-function escape(s: string) {
-  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]!));
+async function updateStatus(id: string, patch: Record<string, unknown>) {
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    await (supabaseAdmin.from("registrations") as any).update(patch).eq("id", id);
+  } catch (e) {
+    console.error("[registration-email] status update failed", e);
+  }
 }
 
 export const sendRegistrationEmail = createServerFn({ method: "POST" })
-  .validator((d: unknown) => schema.parse(d))
+  .inputValidator((d: unknown) => schema.parse(d))
   .handler(async ({ data }) => {
     const apiKey = process.env.RESEND_API_KEY;
-    const from = process.env.REGISTRATION_EMAIL_FROM ?? "Science Tech 2026 <noreply@resend.dev>";
+    const from = process.env.REGISTRATION_EMAIL_FROM ?? "Science Tech 2026 <onboarding@resend.dev>";
+
     if (!apiKey) {
-      console.warn("[registration-email] RESEND_API_KEY not set — skipping send");
+      await updateStatus(data.registration_id, {
+        email_status: "failed",
+        email_error: "RESEND_API_KEY is not configured",
+      });
       return { sent: false, reason: "no_api_key" as const };
     }
 
-    // Extract base64 attachment to embed inline reliably across clients
     const [, base64] = data.qr_data_url.split(",");
     const html = renderHtml(data);
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from,
-        to: [data.email],
-        subject: `Science Tech 2026 — регистрация подтверждена (${data.registration_code})`,
-        html,
-        attachments: base64
-          ? [{ filename: `ScienceTech2026-${data.registration_code}.png`, content: base64 }]
-          : undefined,
-      }),
-    });
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("[registration-email] send failed", res.status, text);
-      return { sent: false, reason: "send_failed" as const };
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from,
+          to: [data.email],
+          subject: `Science Tech 2026 — регистрация подтверждена (${data.registration_code})`,
+          html,
+          attachments: base64
+            ? [
+                {
+                  filename: `ScienceTech2026-${data.registration_code}.png`,
+                  content: base64,
+                  content_id: "qr@sciencetech",
+                },
+              ]
+            : undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("[registration-email] send failed", res.status, text);
+        await updateStatus(data.registration_id, {
+          email_status: "failed",
+          email_error: `Resend ${res.status}: ${text.slice(0, 400)}`,
+        });
+        return { sent: false, reason: "send_failed" as const };
+      }
+
+      await updateStatus(data.registration_id, {
+        email_status: "sent",
+        email_error: null,
+        email_sent_at: new Date().toISOString(),
+      });
+      return { sent: true };
+    } catch (e: any) {
+      const msg = e?.message ?? String(e);
+      console.error("[registration-email] exception", msg);
+      await updateStatus(data.registration_id, { email_status: "failed", email_error: msg });
+      return { sent: false, reason: "exception" as const };
     }
-    return { sent: true };
   });

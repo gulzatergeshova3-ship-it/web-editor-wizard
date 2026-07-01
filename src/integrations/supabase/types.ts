@@ -110,7 +110,9 @@ export type Database = {
           country: string | null
           created_at: string
           email: string
+          email_error: string | null
           email_sent_at: string | null
+          email_status: string | null
           full_name: string
           id: string
           message: string | null
@@ -126,7 +128,9 @@ export type Database = {
           country?: string | null
           created_at?: string
           email: string
+          email_error?: string | null
           email_sent_at?: string | null
+          email_status?: string | null
           full_name: string
           id?: string
           message?: string | null
@@ -142,7 +146,9 @@ export type Database = {
           country?: string | null
           created_at?: string
           email?: string
+          email_error?: string | null
           email_sent_at?: string | null
+          email_status?: string | null
           full_name?: string
           id?: string
           message?: string | null
