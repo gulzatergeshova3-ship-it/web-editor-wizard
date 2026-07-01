@@ -90,10 +90,11 @@ function RegisterPage() {
       color: { dark: "#0f172a", light: "#ffffff" },
     });
 
+    const code = data.registration_code ?? "";
     // Fire-and-forget email; ignore errors on the client
     sendRegistrationEmail({
       data: {
-        registration_code: data.registration_code,
+        registration_code: code,
         full_name: data.full_name,
         email: data.email,
         qr_data_url: qrDataUrl,
@@ -101,13 +102,14 @@ function RegisterPage() {
     }).catch(() => {});
 
     setSuccess({
-      code: data.registration_code,
+      code,
       qrDataUrl,
       fullName: data.full_name,
       email: data.email,
     });
     setLoading(false);
   };
+
 
   return (
     <div className="min-h-screen flex flex-col">
