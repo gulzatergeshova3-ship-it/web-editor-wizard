@@ -86,27 +86,27 @@ function LandingPage() {
           </div>
 
           <div className="relative">
-            <div className="aspect-square max-w-lg mx-auto relative">
-              {/* Decorative squares (poster style) */}
-              <div className="absolute top-0 right-8 size-32 bg-cyan-300/50 rounded-sm"></div>
-              <div className="absolute top-16 right-0 size-20 bg-cyan-200/60 rounded-sm"></div>
-              <div className="absolute top-4 right-40 size-14 bg-cyan-400/30 rounded-sm"></div>
-              <div className="absolute bottom-10 left-2 size-24 bg-cyan-300/40 rounded-sm"></div>
-              <div className="absolute bottom-0 left-28 size-16 bg-cyan-200/50 rounded-sm"></div>
-              <div className="absolute top-1/2 left-0 size-16 bg-cyan-300/30 rounded-sm"></div>
-              <div className="absolute bottom-24 right-4 size-12 bg-cyan-200/40 rounded-sm"></div>
+            <div className="aspect-square w-full max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto relative">
+              {/* Decorative squares (poster style) — sized relatively so they scale on mobile */}
+              <div className="absolute top-0 right-[8%] w-[28%] aspect-square bg-cyan-300/50 rounded-sm"></div>
+              <div className="absolute top-[16%] right-0 w-[18%] aspect-square bg-cyan-200/60 rounded-sm"></div>
+              <div className="absolute top-[4%] right-[42%] w-[12%] aspect-square bg-cyan-400/30 rounded-sm"></div>
+              <div className="absolute bottom-[10%] left-[2%] w-[22%] aspect-square bg-cyan-300/40 rounded-sm"></div>
+              <div className="absolute bottom-0 left-[28%] w-[14%] aspect-square bg-cyan-200/50 rounded-sm"></div>
+              <div className="absolute top-1/2 left-0 w-[14%] aspect-square bg-cyan-300/30 rounded-sm"></div>
+              <div className="absolute bottom-[24%] right-[4%] w-[11%] aspect-square bg-cyan-200/40 rounded-sm"></div>
 
-              {/* Spinning 3D atom — scaled to ~70% so rotation diagonal stays inside container */}
+              {/* Spinning 3D atom — 80% width so rotation stays inside the box on every viewport */}
               <div className="absolute inset-0 grid place-items-center overflow-hidden">
                 <img
                   src={atom3dAsset.url}
                   alt="Science Tech Atom"
-                  className="w-[70%] h-[70%] object-contain drop-shadow-2xl relative z-10 animate-[spin_40s_linear_infinite] will-change-transform"
+                  className="w-[80%] h-[80%] object-contain drop-shadow-2xl relative z-10 animate-[spin_40s_linear_infinite] will-change-transform"
                   style={{ transformOrigin: "50% 50%", backfaceVisibility: "hidden" }}
                 />
               </div>
-
             </div>
+
 
             {hero.event_date && (
               <div className="mt-6 max-w-md mx-auto">
