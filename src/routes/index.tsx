@@ -96,14 +96,16 @@ function LandingPage() {
               <div className="absolute top-1/2 left-0 size-16 bg-cyan-300/30 rounded-sm"></div>
               <div className="absolute bottom-24 right-4 size-12 bg-cyan-200/40 rounded-sm"></div>
 
-              {/* Spinning 3D atom */}
-              <div className="absolute inset-0 grid place-items-center">
+              {/* Spinning 3D atom — scaled to ~70% so rotation diagonal stays inside container */}
+              <div className="absolute inset-0 grid place-items-center overflow-hidden">
                 <img
                   src={atom3dAsset.url}
                   alt="Science Tech Atom"
-                  className="w-full h-full object-contain animate-spin [animation-duration:18s] drop-shadow-2xl relative z-10"
+                  className="w-[70%] h-[70%] object-contain drop-shadow-2xl relative z-10 animate-[spin_40s_linear_infinite] will-change-transform"
+                  style={{ transformOrigin: "50% 50%", backfaceVisibility: "hidden" }}
                 />
               </div>
+
             </div>
 
             {hero.event_date && (
