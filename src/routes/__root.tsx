@@ -79,9 +79,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Science Tech 2026" },
-      { name: "description", content: "Международная научная конференция Science Tech 2026" },
+      { title: "Science Tech 2026 — Международная научная конференция" },
+      { name: "description", content: "Ведущая площадка для обмена научными достижениями и технологическими инновациями. 18 сентября 2026, Бишкек." },
       { property: "og:type", content: "website" },
+      { property: "og:title", content: "Science Tech 2026 — Международная научная конференция" },
+      { name: "twitter:title", content: "Science Tech 2026 — Международная научная конференция" },
+      { property: "og:description", content: "Ведущая площадка для обмена научными достижениями и технологическими инновациями. 18 сентября 2026, Бишкек." },
+      { name: "twitter:description", content: "Ведущая площадка для обмена научными достижениями и технологическими инновациями. 18 сентября 2026, Бишкек." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3917d55f-8ce7-4d32-a574-23868512d109/id-preview-716e3c81--08b62f11-49f9-4db8-9266-81cbd03edac3.lovable.app-1782901747891.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3917d55f-8ce7-4d32-a574-23868512d109/id-preview-716e3c81--08b62f11-49f9-4db8-9266-81cbd03edac3.lovable.app-1782901747891.png" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
