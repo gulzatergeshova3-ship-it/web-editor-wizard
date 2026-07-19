@@ -41,38 +41,41 @@
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.99 0.005 240);
-  --foreground: oklch(0.18 0.04 264);
+  --radius: 0.25rem;
+  --background: oklch(0.985 0.008 85);
+  --foreground: oklch(0.18 0.02 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.04 264);
+  --card-foreground: oklch(0.18 0.02 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.04 264);
-  --primary: oklch(0.55 0.22 265);
-  --primary-foreground: oklch(0.99 0.005 240);
-  --secondary: oklch(0.96 0.02 240);
-  --secondary-foreground: oklch(0.25 0.05 265);
-  --muted: oklch(0.96 0.015 240);
-  --muted-foreground: oklch(0.5 0.03 260);
-  --accent: oklch(0.93 0.06 220);
-  --accent-foreground: oklch(0.25 0.08 265);
-  --destructive: oklch(0.58 0.24 27);
+  --popover-foreground: oklch(0.18 0.02 260);
+  --primary: oklch(0.28 0.06 255);
+  --primary-foreground: oklch(0.985 0.008 85);
+  --secondary: oklch(0.94 0.01 85);
+  --secondary-foreground: oklch(0.22 0.04 255);
+  --muted: oklch(0.94 0.01 85);
+  --muted-foreground: oklch(0.42 0.02 260);
+  --accent: oklch(0.42 0.14 28);
+  --accent-foreground: oklch(0.985 0.008 85);
+  --destructive: oklch(0.5 0.2 27);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.9 0.02 240);
-  --input: oklch(0.92 0.02 240);
-  --ring: oklch(0.55 0.22 265);
-  --sidebar: oklch(0.985 0.005 240);
-  --sidebar-foreground: oklch(0.2 0.04 264);
-  --sidebar-primary: oklch(0.55 0.22 265);
+  --border: oklch(0.86 0.015 85);
+  --input: oklch(0.9 0.015 85);
+  --ring: oklch(0.28 0.06 255);
+  --sidebar: oklch(0.97 0.01 85);
+  --sidebar-foreground: oklch(0.2 0.02 260);
+  --sidebar-primary: oklch(0.28 0.06 255);
   --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.95 0.03 240);
-  --sidebar-accent-foreground: oklch(0.2 0.04 264);
-  --sidebar-border: oklch(0.9 0.02 240);
-  --sidebar-ring: oklch(0.55 0.22 265);
+  --sidebar-accent: oklch(0.93 0.015 85);
+  --sidebar-accent-foreground: oklch(0.2 0.02 260);
+  --sidebar-border: oklch(0.86 0.015 85);
+  --sidebar-ring: oklch(0.28 0.06 255);
 
-  --gradient-brand: linear-gradient(90deg, oklch(0.55 0.22 265), oklch(0.7 0.16 215), oklch(0.7 0.18 165));
-  --gradient-hero: linear-gradient(135deg, oklch(0.97 0.025 255) 0%, oklch(0.95 0.04 215) 50%, oklch(0.96 0.03 175) 100%);
-  --shadow-brand: 0 20px 60px -20px oklch(0.55 0.22 265 / 0.35);
+  --gradient-brand: linear-gradient(90deg, oklch(0.28 0.06 255), oklch(0.28 0.06 255));
+  --gradient-hero: linear-gradient(180deg, oklch(0.985 0.008 85) 0%, oklch(0.96 0.012 85) 100%);
+  --shadow-brand: 0 1px 0 0 oklch(0.28 0.06 255 / 0.08), 0 24px 48px -32px oklch(0.28 0.06 255 / 0.25);
+
+  --font-serif: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
 .dark {
@@ -108,20 +111,28 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
   }
-  h1, h2, h3, h4 { letter-spacing: -0.02em; }
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+}
+
+@utility font-serif-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 @utility text-gradient-brand {
-  background-image: var(--gradient-brand);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
+  color: var(--color-primary);
 }
 
 @utility bg-gradient-brand {
-  background-image: var(--gradient-brand);
+  background-color: var(--color-primary);
 }
 
 @utility bg-hero {
@@ -130,6 +141,24 @@
 
 @utility shadow-brand {
   box-shadow: var(--shadow-brand);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 @keyframes marquee-scroll {
