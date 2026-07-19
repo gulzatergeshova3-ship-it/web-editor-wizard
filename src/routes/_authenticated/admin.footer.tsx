@@ -60,7 +60,7 @@ function Page() {
     <div className="max-w-5xl space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Footer Settings</h1>
-        <Button onClick={save} disabled={loading} className="bg-gradient-brand text-white border-0">
+        <Button onClick={save} disabled={loading} className="bg-primary text-primary-foreground border-0">
           {loading ? "Сохранение..." : "Сохранить изменения"}
         </Button>
       </div>
@@ -187,7 +187,7 @@ function Page() {
       </section>
 
       <div className="flex justify-end">
-        <Button onClick={save} disabled={loading} className="bg-gradient-brand text-white border-0">
+        <Button onClick={save} disabled={loading} className="bg-primary text-primary-foreground border-0">
           {loading ? "Сохранение..." : "Сохранить изменения"}
         </Button>
       </div>
