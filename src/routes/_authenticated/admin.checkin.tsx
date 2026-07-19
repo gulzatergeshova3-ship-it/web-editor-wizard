@@ -53,6 +53,17 @@ function Page() {
     });
   };
 
+  // Open popup on every new result; vibrate for feedback on phones
+  useEffect(() => {
+    if (!result) return;
+    setPopupOpen(true);
+    try {
+      const pattern = result.kind === "ok" ? [80] : result.kind === "already" ? [40, 60, 40] : [200];
+      (navigator as any).vibrate?.(pattern);
+    } catch {}
+  }, [result]);
+
+
   const startScan = async () => {
     try {
       setResult(null);
