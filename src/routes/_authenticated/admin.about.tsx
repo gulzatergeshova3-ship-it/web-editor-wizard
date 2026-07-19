@@ -50,7 +50,7 @@ function Page() {
           </div>
         </div>
         <LocalizedField label="Адрес" value={contacts.address} onChange={(v) => setContacts({ ...contacts, address: v })}/>
-        <Button onClick={save} disabled={loading} className="bg-gradient-brand text-white border-0">{loading ? "..." : "Сохранить"}</Button>
+        <Button onClick={save} disabled={loading} className="bg-primary text-primary-foreground border-0">{loading ? "..." : "Сохранить"}</Button>
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ function Page() {
             <LocalizedField label="Название" value={it.title} onChange={(v) => upd(it.id, { title: v })}/>
             <LocalizedField label="Описание" value={it.description} onChange={(v) => upd(it.id, { description: v })} textarea/>
             <div className="flex gap-2">
-              <Button size="sm" onClick={() => save(it)} className="bg-gradient-brand text-white border-0">Сохранить</Button>
+              <Button size="sm" onClick={() => save(it)} className="bg-primary text-primary-foreground border-0">Сохранить</Button>
               <Button size="sm" variant="destructive" onClick={() => del(it.id)}><Trash2 className="size-4"/></Button>
             </div>
           </div>

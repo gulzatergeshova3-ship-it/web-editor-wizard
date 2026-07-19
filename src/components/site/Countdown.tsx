@@ -22,7 +22,7 @@ export function Countdown({ target }: { target: string }) {
     { v: seconds, l: tr("seconds") },
   ];
   return (
-    <div className="rounded-2xl border border-border bg-card/70 backdrop-blur p-6 shadow-brand">
+    <div className="rounded-2xl border border-border bg-card/70 backdrop-blur p-6 shadow-lg">
       <p className="text-center text-sm font-medium text-muted-foreground mb-4">{tr("countdown_title")}</p>
       <div className="grid grid-cols-4 gap-3">
         {items.map((it, i) => (

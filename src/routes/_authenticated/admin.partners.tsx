@@ -41,7 +41,7 @@ function Page() {
               <div><Label>Ссылка</Label><Input value={it.url ?? ""} onChange={(e) => upd(it.id, { url: e.target.value })}/></div>
             </div>
             <div className="flex gap-2">
-              <Button size="sm" onClick={() => save(it)} className="bg-gradient-brand text-white border-0">Сохранить</Button>
+              <Button size="sm" onClick={() => save(it)} className="bg-primary text-primary-foreground border-0">Сохранить</Button>
               <Button size="sm" variant="destructive" onClick={() => del(it.id)}><Trash2 className="size-4"/></Button>
             </div>
           </div>
