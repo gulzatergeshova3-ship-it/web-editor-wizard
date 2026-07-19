@@ -24,9 +24,9 @@ function AdminHome() {
   }, []);
 
   const cards = [
-    { label: "Всего регистраций", value: stats.total, icon: Users, color: "from-blue-500 to-indigo-500" },
-    { label: "Зарегистрировано сегодня", value: stats.today, icon: CalendarClock, color: "from-emerald-500 to-teal-500" },
-    { label: "Прошли Check-in", value: stats.checkedIn, icon: UserCheck, color: "from-amber-500 to-orange-500" },
+    { label: "Всего регистраций", value: stats.total, icon: Users },
+    { label: "Зарегистрировано сегодня", value: stats.today, icon: CalendarClock },
+    { label: "Прошли Check-in", value: stats.checkedIn, icon: UserCheck },
   ];
 
   return (
@@ -39,13 +39,13 @@ function AdminHome() {
           const Icon = c.icon;
           return (
             <div key={c.label} className="rounded-2xl border border-border bg-card p-6 relative overflow-hidden">
-              <div className={`absolute inset-0 opacity-5 bg-gradient-to-br ${c.color}`} />
+              <div className="absolute inset-0 opacity-5 bg-primary" />
               <div className="relative flex items-start justify-between">
                 <div>
                   <div className="text-sm text-muted-foreground">{c.label}</div>
                   <div className="mt-2 text-4xl font-bold tabular-nums">{c.value}</div>
                 </div>
-                <div className={`size-12 rounded-xl bg-gradient-to-br ${c.color} text-white grid place-items-center shadow-lg`}>
+                <div className="size-12 rounded-xl bg-primary text-primary-foreground grid place-items-center shadow-lg">
                   <Icon className="size-6" />
                 </div>
               </div>
@@ -55,14 +55,14 @@ function AdminHome() {
       </div>
 
       <div className="mt-8 grid md:grid-cols-2 gap-4">
-        <Link to="/admin/participants" className="rounded-2xl border border-border bg-card p-6 hover:shadow-brand transition flex items-center gap-4">
+        <Link to="/admin/participants" className="rounded-2xl border border-border bg-card p-6 hover:shadow-lg transition flex items-center gap-4">
           <div className="size-12 rounded-xl bg-primary/10 text-primary grid place-items-center"><Users className="size-6"/></div>
           <div>
             <div className="font-semibold">Participants</div>
             <div className="text-sm text-muted-foreground">Таблица с поиском, фильтром и экспортом</div>
           </div>
         </Link>
-        <Link to="/admin/checkin" className="rounded-2xl border border-border bg-card p-6 hover:shadow-brand transition flex items-center gap-4">
+        <Link to="/admin/checkin" className="rounded-2xl border border-border bg-card p-6 hover:shadow-lg transition flex items-center gap-4">
           <div className="size-12 rounded-xl bg-primary/10 text-primary grid place-items-center"><ScanLine className="size-6"/></div>
           <div>
             <div className="font-semibold">Check-in</div>

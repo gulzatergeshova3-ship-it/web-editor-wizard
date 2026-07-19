@@ -50,17 +50,17 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-hero grid place-items-center px-4">
-      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-brand">
+    <div className="min-h-screen bg-background grid place-items-center px-4">
+      <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-lg">
         <Link to="/" className="flex items-center gap-2 mb-6 justify-center">
-          <div className="size-10 rounded-xl bg-gradient-brand grid place-items-center text-white"><Atom className="size-5"/></div>
+          <div className="size-10 rounded-xl bg-primary grid place-items-center text-primary-foreground"><Atom className="size-5"/></div>
           <div className="font-bold">SCIENCE TECH 2026</div>
         </Link>
         <h1 className="text-2xl font-bold text-center">{mode === "in" ? tr("sign_in") : tr("sign_up")}</h1>
         <form onSubmit={submit} className="mt-6 space-y-4">
           <div><Label>Email</Label><Input required type="email" value={email} onChange={(e) => setEmail(e.target.value)}/></div>
           <div><Label>{tr("password")}</Label><Input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={6}/></div>
-          <Button type="submit" disabled={loading} className="w-full bg-gradient-brand text-white border-0">
+          <Button type="submit" disabled={loading} className="w-full bg-primary text-primary-foreground border-0">
             {loading ? "..." : (mode === "in" ? tr("sign_in") : tr("sign_up"))}
           </Button>
         </form>

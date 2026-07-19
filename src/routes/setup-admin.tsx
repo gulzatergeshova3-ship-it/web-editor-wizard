@@ -50,9 +50,9 @@ function SetupAdminPage() {
   const lockedForNonSeed = state?.hasAdmin && !state?.canRepairSeedAdmin;
 
   return (
-    <div className="min-h-screen bg-hero grid place-items-center px-4 py-10">
-      <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-8 shadow-brand">
-        <div className="mx-auto mb-5 size-12 rounded-2xl bg-gradient-brand grid place-items-center text-white">
+    <div className="min-h-screen bg-background grid place-items-center px-4 py-10">
+      <div className="w-full max-w-lg rounded-2xl border border-border bg-card p-8 shadow-lg">
+        <div className="mx-auto mb-5 size-12 rounded-2xl bg-primary grid place-items-center text-primary-foreground">
           <ShieldCheck className="size-6" />
         </div>
         <h1 className="text-2xl font-bold text-center">Защищённый setup администратора</h1>
@@ -88,7 +88,7 @@ function SetupAdminPage() {
               <Label>Новый пароль</Label>
               <Input required type="password" minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
-            <Button type="submit" disabled={loading || !state?.setupSecretConfigured} className="w-full bg-gradient-brand text-white border-0">
+            <Button type="submit" disabled={loading || !state?.setupSecretConfigured} className="w-full bg-primary text-primary-foreground border-0">
               {loading ? "Создаю…" : state?.hasAdmin ? "Восстановить seed-admin" : "Создать первого admin"}
             </Button>
             {!state?.setupSecretConfigured && (
