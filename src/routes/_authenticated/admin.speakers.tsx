@@ -20,7 +20,7 @@ function Page() {
     const { error } = await supabase.from("speakers").update({ sort_order: it.sort_order, name: it.name, title: it.title, bio: it.bio, photo_url: it.photo_url }).eq("id", it.id);
     if (error) toast.error(error.message); else toast.success("Сохранено");
   };
-  const add = async () => { const { error } = await supabase.from("speakers").insert({ sort_order: items.length + 1, name: "Новый спикер", title: {}, bio: {} }); if (error) toast.error(error.message); else load(); };
+  const add = async () => { const { error } = await supabase.from("speakers").insert({ sort_order: items.length + 1, name: { ru: "Новый спикер", en: "New speaker", kg: "Жаңы спикер" }, title: {}, bio: {} }); if (error) toast.error(error.message); else load(); };
   const del = async (id: string) => { if (!confirm("Удалить?")) return; const { error } = await supabase.from("speakers").delete().eq("id", id); if (error) toast.error(error.message); else load(); };
 
   return (
