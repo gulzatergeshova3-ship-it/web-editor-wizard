@@ -24,6 +24,7 @@ import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authen
 import { Route as AuthenticatedAdminParticipantsRouteImport } from './routes/_authenticated/admin.participants'
 import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authenticated/admin.hero'
 import { Route as AuthenticatedAdminFooterRouteImport } from './routes/_authenticated/admin.footer'
+import { Route as AuthenticatedAdminEmailSettingsRouteImport } from './routes/_authenticated/admin.email-settings'
 import { Route as AuthenticatedAdminCheckinRouteImport } from './routes/_authenticated/admin.checkin'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
 
@@ -108,6 +109,12 @@ const AuthenticatedAdminFooterRoute =
     path: '/footer',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminEmailSettingsRoute =
+  AuthenticatedAdminEmailSettingsRouteImport.update({
+    id: '/email-settings',
+    path: '/email-settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminCheckinRoute =
   AuthenticatedAdminCheckinRouteImport.update({
     id: '/checkin',
@@ -128,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
+  '/admin/email-settings': typeof AuthenticatedAdminEmailSettingsRoute
   '/admin/footer': typeof AuthenticatedAdminFooterRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
   '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
@@ -145,6 +153,7 @@ export interface FileRoutesByTo {
   '/setup-admin': typeof SetupAdminRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
   '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
+  '/admin/email-settings': typeof AuthenticatedAdminEmailSettingsRoute
   '/admin/footer': typeof AuthenticatedAdminFooterRoute
   '/admin/hero': typeof AuthenticatedAdminHeroRoute
   '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
@@ -165,6 +174,7 @@ export interface FileRoutesById {
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
   '/_authenticated/admin/checkin': typeof AuthenticatedAdminCheckinRoute
+  '/_authenticated/admin/email-settings': typeof AuthenticatedAdminEmailSettingsRoute
   '/_authenticated/admin/footer': typeof AuthenticatedAdminFooterRoute
   '/_authenticated/admin/hero': typeof AuthenticatedAdminHeroRoute
   '/_authenticated/admin/participants': typeof AuthenticatedAdminParticipantsRoute
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/admin/about'
     | '/admin/checkin'
+    | '/admin/email-settings'
     | '/admin/footer'
     | '/admin/hero'
     | '/admin/participants'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/setup-admin'
     | '/admin/about'
     | '/admin/checkin'
+    | '/admin/email-settings'
     | '/admin/footer'
     | '/admin/hero'
     | '/admin/participants'
@@ -221,6 +233,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin'
     | '/_authenticated/admin/about'
     | '/_authenticated/admin/checkin'
+    | '/_authenticated/admin/email-settings'
     | '/_authenticated/admin/footer'
     | '/_authenticated/admin/hero'
     | '/_authenticated/admin/participants'
@@ -347,6 +360,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminFooterRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/email-settings': {
+      id: '/_authenticated/admin/email-settings'
+      path: '/email-settings'
+      fullPath: '/admin/email-settings'
+      preLoaderRoute: typeof AuthenticatedAdminEmailSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/checkin': {
       id: '/_authenticated/admin/checkin'
       path: '/checkin'
@@ -367,6 +387,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
   AuthenticatedAdminCheckinRoute: typeof AuthenticatedAdminCheckinRoute
+  AuthenticatedAdminEmailSettingsRoute: typeof AuthenticatedAdminEmailSettingsRoute
   AuthenticatedAdminFooterRoute: typeof AuthenticatedAdminFooterRoute
   AuthenticatedAdminHeroRoute: typeof AuthenticatedAdminHeroRoute
   AuthenticatedAdminParticipantsRoute: typeof AuthenticatedAdminParticipantsRoute
@@ -381,6 +402,7 @@ interface AuthenticatedAdminRouteChildren {
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
   AuthenticatedAdminCheckinRoute: AuthenticatedAdminCheckinRoute,
+  AuthenticatedAdminEmailSettingsRoute: AuthenticatedAdminEmailSettingsRoute,
   AuthenticatedAdminFooterRoute: AuthenticatedAdminFooterRoute,
   AuthenticatedAdminHeroRoute: AuthenticatedAdminHeroRoute,
   AuthenticatedAdminParticipantsRoute: AuthenticatedAdminParticipantsRoute,
