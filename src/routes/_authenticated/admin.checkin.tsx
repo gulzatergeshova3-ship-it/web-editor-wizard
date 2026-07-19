@@ -17,10 +17,12 @@ type Result =
 
 function Page() {
   const [result, setResult] = useState<Result | null>(null);
+  const [popupOpen, setPopupOpen] = useState(false);
   const [manual, setManual] = useState("");
   const [scanning, setScanning] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const lastRef = useRef<{ v: string; t: number }>({ v: "", t: 0 });
+
 
   const process = async (raw: string) => {
     let token = raw.trim();
