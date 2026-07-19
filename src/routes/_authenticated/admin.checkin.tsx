@@ -4,7 +4,9 @@ import { Html5Qrcode } from "html5-qrcode";
 import { CheckCircle2, XCircle, AlertTriangle, Camera, CameraOff, ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
+
 
 export const Route = createFileRoute("/_authenticated/admin/checkin")({ component: Page });
 
@@ -15,10 +17,12 @@ type Result =
 
 function Page() {
   const [result, setResult] = useState<Result | null>(null);
+  const [popupOpen, setPopupOpen] = useState(false);
   const [manual, setManual] = useState("");
   const [scanning, setScanning] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const lastRef = useRef<{ v: string; t: number }>({ v: "", t: 0 });
+
 
   const process = async (raw: string) => {
     let token = raw.trim();
@@ -48,6 +52,17 @@ function Page() {
       at: r.checked_in_at,
     });
   };
+
+  // Open popup on every new result; vibrate for feedback on phones
+  useEffect(() => {
+    if (!result) return;
+    setPopupOpen(true);
+    try {
+      const pattern = result.kind === "ok" ? [80] : result.kind === "already" ? [40, 60, 40] : [200];
+      (navigator as any).vibrate?.(pattern);
+    } catch {}
+  }, [result]);
+
 
   const startScan = async () => {
     try {
@@ -143,13 +158,23 @@ function Page() {
           </form>
         </div>
 
-        <div>
+        <div className="hidden md:block">
           <ResultView result={result} />
         </div>
       </div>
+
+      {/* Mobile popup with scan result */}
+      <Dialog open={popupOpen} onOpenChange={setPopupOpen}>
+        <DialogContent className="md:hidden max-w-[92vw] p-4 gap-3">
+          <DialogTitle className="sr-only">Результат сканирования</DialogTitle>
+          <ResultView result={result} />
+          <Button onClick={() => setPopupOpen(false)} className="w-full">Сканировать следующего</Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
 
 function ResultView({ result }: { result: Result | null }) {
   if (!result) {
