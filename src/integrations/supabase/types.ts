@@ -244,7 +244,7 @@ export type Database = {
           bio: Json
           created_at: string
           id: string
-          name: string
+          name: Json
           photo_url: string | null
           sort_order: number
           title: Json
@@ -254,7 +254,7 @@ export type Database = {
           bio?: Json
           created_at?: string
           id?: string
-          name: string
+          name?: Json
           photo_url?: string | null
           sort_order?: number
           title?: Json
@@ -264,7 +264,7 @@ export type Database = {
           bio?: Json
           created_at?: string
           id?: string
-          name?: string
+          name?: Json
           photo_url?: string | null
           sort_order?: number
           title?: Json
