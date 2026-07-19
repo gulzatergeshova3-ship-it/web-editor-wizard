@@ -29,6 +29,10 @@ function AdminLayout() {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+
 
   useEffect(() => {
     (async () => {
