@@ -158,13 +158,23 @@ function Page() {
           </form>
         </div>
 
-        <div>
+        <div className="hidden md:block">
           <ResultView result={result} />
         </div>
       </div>
+
+      {/* Mobile popup with scan result */}
+      <Dialog open={popupOpen} onOpenChange={setPopupOpen}>
+        <DialogContent className="md:hidden max-w-[92vw] p-4 gap-3">
+          <DialogTitle className="sr-only">Результат сканирования</DialogTitle>
+          <ResultView result={result} />
+          <Button onClick={() => setPopupOpen(false)} className="w-full">Сканировать следующего</Button>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
+
 
 function ResultView({ result }: { result: Result | null }) {
   if (!result) {
