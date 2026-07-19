@@ -52,8 +52,34 @@ function Page() {
   const startScan = async () => {
     try {
       setResult(null);
+      if (!window.isSecureContext) {
+        setResult({ kind: "error", message: "Камера доступна только по HTTPS. Откройте опубликованный сайт (не в редакторе)." });
+        return;
+      }
+      if (!navigator.mediaDevices?.getUserMedia) {
+        setResult({ kind: "error", message: "Браузер не поддерживает доступ к камере." });
+        return;
+      }
+      // Explicit permission prompt first — gives a clear error if denied/blocked
+      try {
+        const s = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        s.getTracks().forEach((t) => t.stop());
+      } catch (permErr: any) {
+        const name = permErr?.name || "";
+        let msg = "Не удалось получить доступ к камере.";
+        if (name === "NotAllowedError") msg = "Доступ к камере запрещён. Разрешите доступ в настройках браузера.";
+        else if (name === "NotFoundError") msg = "Камера не найдена на этом устройстве.";
+        else if (name === "NotReadableError") msg = "Камера занята другим приложением.";
+        else if (window.self !== window.top) msg = "Камера заблокирована в iframe редактора. Откройте опубликованный сайт в новой вкладке.";
+        setResult({ kind: "error", message: msg });
+        return;
+      }
+      setScanning(true);
+      // Wait for the target div to render (it's conditional on `scanning`? no — always mounted)
+      await new Promise((r) => setTimeout(r, 50));
       const el = document.getElementById("qr-reader");
-      if (!el) return;
+      if (!el) { setResult({ kind: "error", message: "qr-reader элемент не найден" }); setScanning(false); return; }
+      el.innerHTML = "";
       const html5 = new Html5Qrcode("qr-reader");
       scannerRef.current = html5;
       await html5.start(
@@ -67,8 +93,8 @@ function Page() {
         },
         () => {},
       );
-      setScanning(true);
     } catch (e: any) {
+      setScanning(false);
       setResult({ kind: "error", message: e?.message ?? "Camera error" });
     }
   };
