@@ -9,11 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { supabase } from "@/integrations/supabase/client";
 import { useI18n } from "@/lib/i18n";
 import { settingsQuery } from "@/lib/queries";
 import { toast } from "sonner";
 import { sendRegistrationEmail } from "@/lib/registration-email.functions";
+import { createRegistration } from "@/lib/registration.functions";
 
 import logo from "@/assets/science-tech-logo-t.png.asset.json";
 
@@ -62,55 +62,52 @@ function RegisterPage() {
       return;
     }
     setLoading(true);
-    const { data, error } = await supabase
-      .from("registrations")
-      .insert({
+    try {
+      const data = await createRegistration({
+        data: {
         full_name: form.full_name.trim(),
         email: form.email.trim().toLowerCase(),
         phone: form.phone.trim() || null,
         organization: form.organization.trim() || null,
         position: form.position.trim() || null,
         country: form.country.trim() || null,
-      })
-      .select("id, registration_code, qr_token, full_name, email")
-      .single();
+        },
+      });
 
-    if (error || !data) {
-      setLoading(false);
-      toast.error(error?.message ?? "Error");
-      return;
-    }
+      const qrPayload = JSON.stringify({
+        id: data.registration_code,
+        token: data.qr_token,
+        event: "Science Tech 2026",
+      });
+      const qrDataUrl = await QRCode.toDataURL(qrPayload, {
+        width: 480,
+        margin: 2,
+        color: { dark: "#0f172a", light: "#ffffff" },
+      });
 
-    const qrPayload = JSON.stringify({
-      id: data.registration_code,
-      token: data.qr_token,
-      event: "Science Tech 2026",
-    });
-    const qrDataUrl = await QRCode.toDataURL(qrPayload, {
-      width: 480,
-      margin: 2,
-      color: { dark: "#0f172a", light: "#ffffff" },
-    });
+      const code = data.registration_code ?? "";
+      // Fire-and-forget email; ignore errors on the client
+      sendRegistrationEmail({
+        data: {
+          registration_id: data.id,
+          registration_code: code,
+          full_name: data.full_name,
+          email: data.email,
+          qr_data_url: qrDataUrl,
+        },
+      }).catch(() => {});
 
-    const code = data.registration_code ?? "";
-    // Fire-and-forget email; ignore errors on the client
-    sendRegistrationEmail({
-      data: {
-        registration_id: data.id,
-        registration_code: code,
-        full_name: data.full_name,
+      setSuccess({
+        code,
+        qrDataUrl,
+        fullName: data.full_name,
         email: data.email,
-        qr_data_url: qrDataUrl,
-      },
-    }).catch(() => {});
-
-    setSuccess({
-      code,
-      qrDataUrl,
-      fullName: data.full_name,
-      email: data.email,
-    });
-    setLoading(false);
+      });
+    } catch (error: any) {
+      toast.error(error?.message ?? "Error");
+    } finally {
+      setLoading(false);
+    }
   };
 
 
