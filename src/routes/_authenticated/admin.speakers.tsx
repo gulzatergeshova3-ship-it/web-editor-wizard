@@ -20,7 +20,7 @@ function Page() {
     const { error } = await supabase.from("speakers").update({ sort_order: it.sort_order, name: it.name, title: it.title, bio: it.bio, photo_url: it.photo_url }).eq("id", it.id);
     if (error) toast.error(error.message); else toast.success("Сохранено");
   };
-  const add = async () => { const { error } = await supabase.from("speakers").insert({ sort_order: items.length + 1, name: "Новый спикер", title: {}, bio: {} }); if (error) toast.error(error.message); else load(); };
+  const add = async () => { const { error } = await supabase.from("speakers").insert({ sort_order: items.length + 1, name: { ru: "Новый спикер", en: "New speaker", kg: "Жаңы спикер" }, title: {}, bio: {} }); if (error) toast.error(error.message); else load(); };
   const del = async (id: string) => { if (!confirm("Удалить?")) return; const { error } = await supabase.from("speakers").delete().eq("id", id); if (error) toast.error(error.message); else load(); };
 
   return (
@@ -32,11 +32,10 @@ function Page() {
       <div className="mt-6 space-y-4">
         {items.map((it) => (
           <div key={it.id} className="rounded-xl border border-border bg-card p-5 space-y-4">
-            <div className="grid grid-cols-3 gap-3">
-              <div><Label>Порядок</Label><Input type="number" value={it.sort_order} onChange={(e) => upd(it.id, { sort_order: +e.target.value })}/></div>
-              <div className="col-span-2"><Label>Имя</Label><Input value={it.name} onChange={(e) => upd(it.id, { name: e.target.value })}/></div>
-            </div>
+            
+            <div><Label>Порядок</Label><Input type="number" value={it.sort_order} onChange={(e) => upd(it.id, { sort_order: +e.target.value })}/></div>
             <ImageUpload label="Фотография" value={it.photo_url} folder="speakers" onChange={(url) => { upd(it.id, { photo_url: url }); supabase.from("speakers").update({ photo_url: url }).eq("id", it.id).then(() => {}); }}/>
+            <LocalizedField label="Имя" value={it.name} onChange={(v) => upd(it.id, { name: v })}/>
             <LocalizedField label="Должность / организация" value={it.title} onChange={(v) => upd(it.id, { title: v })}/>
             <LocalizedField label="Био" value={it.bio} onChange={(v) => upd(it.id, { bio: v })} textarea/>
             <div className="flex gap-2">

@@ -186,25 +186,27 @@ function LandingPage() {
             <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {speakers.map((s, i) => (
+            {speakers.map((s, i) => {
+              const localName = pickL(s.name, lang) || "";
+              return (
               <div key={s.id} className="group">
                 <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-muted">
                   {s.photo_url ? (
-                    <img src={s.photo_url} alt={s.name} className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={s.photo_url} alt={localName} className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   ) : (
                     <div className="absolute inset-0 grid place-items-center bg-gradient-brand text-white text-4xl font-bold">
-                      {s.name.split(" ").map(p => p[0]).slice(0, 2).join("")}
+                      {localName.split(" ").map(p => p[0]).slice(0, 2).join("")}
                     </div>
                   )}
                   <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 text-[11px] font-mono tracking-[0.2em] text-white uppercase drop-shadow-md">
                     <span>SPK · {String(i + 1).padStart(2, "0")}</span>
                   </div>
                 </div>
-                <div className="mt-4 font-semibold text-base">{s.name}</div>
+                <div className="mt-4 font-semibold text-base">{localName}</div>
                 <div className="text-sm text-primary mt-1">{pickL(s.title, lang)}</div>
                 <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{pickL(s.bio, lang)}</p>
               </div>
-            ))}
+            );})}
           </div>
         </div>
       </section>
