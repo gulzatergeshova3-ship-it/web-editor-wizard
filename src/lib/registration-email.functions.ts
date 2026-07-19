@@ -23,7 +23,7 @@ function renderHtml(input: z.infer<typeof schema>) {
     <tr><td align="center">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0"
         style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(15,23,42,.08)">
-        <tr><td style="padding:28px 32px;background:linear-gradient(135deg,#0ea5e9,#6366f1);color:#fff">
+        <tr><td style="padding:28px 32px;background:#0ea5e9;color:#fff">
           <div style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.85">Science Tech 2026</div>
           <div style="font-size:22px;font-weight:700;margin-top:6px">Международная научная конференция</div>
         </td></tr>

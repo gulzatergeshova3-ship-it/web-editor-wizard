@@ -75,7 +75,7 @@ function AdminLayout() {
       {/* Mobile topbar */}
       <div className="lg:hidden sticky top-0 z-40 flex items-center justify-between gap-2 border-b border-border bg-sidebar text-sidebar-foreground px-3 py-2">
         <Link to="/" className="flex items-center gap-2 min-w-0">
-          <div className="size-8 shrink-0 rounded-lg bg-gradient-brand grid place-items-center text-white"><Atom className="size-4"/></div>
+          <div className="size-8 shrink-0 rounded-lg bg-primary grid place-items-center text-primary-foreground"><Atom className="size-4"/></div>
           <div className="leading-tight min-w-0">
             <div className="text-sm font-bold truncate">Science Tech</div>
             <div className="text-[10px] text-muted-foreground truncate">Админ кабинет</div>
@@ -91,7 +91,7 @@ function AdminLayout() {
           <aside className="relative w-72 max-w-[85%] h-full bg-sidebar text-sidebar-foreground p-4 flex flex-col overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <Link to="/" className="flex items-center gap-2 min-w-0">
-                <div className="size-9 shrink-0 rounded-lg bg-gradient-brand grid place-items-center text-white"><Atom className="size-4"/></div>
+                <div className="size-9 shrink-0 rounded-lg bg-primary grid place-items-center text-primary-foreground"><Atom className="size-4"/></div>
                 <div className="leading-tight min-w-0"><div className="text-sm font-bold truncate">Science Tech</div><div className="text-[10px] text-muted-foreground truncate">Админ кабинет</div></div>
               </Link>
               <button onClick={() => setMenuOpen(false)} aria-label="Закрыть" className="p-2 rounded-lg hover:bg-sidebar-accent"><X className="size-5"/></button>
@@ -108,7 +108,7 @@ function AdminLayout() {
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-64 shrink-0 border-r border-border bg-sidebar text-sidebar-foreground p-4 flex-col">
         <Link to="/" className="flex items-center gap-2 px-2 py-2">
-          <div className="size-9 rounded-lg bg-gradient-brand grid place-items-center text-white"><Atom className="size-4"/></div>
+          <div className="size-9 rounded-lg bg-primary grid place-items-center text-primary-foreground"><Atom className="size-4"/></div>
           <div className="leading-tight">
             <div className="text-sm font-bold">Science Tech</div>
             <div className="text-[10px] text-muted-foreground">Админ кабинет</div>

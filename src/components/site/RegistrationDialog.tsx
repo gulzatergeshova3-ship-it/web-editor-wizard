@@ -42,7 +42,7 @@ export function RegistrationDialog({ open, onOpenChange }: { open: boolean; onOp
           </div>
           <div><Label>{tr("reg_section")}</Label><Input value={form.section} onChange={upd("section")} maxLength={150}/></div>
           <div><Label>{tr("reg_message")}</Label><Textarea value={form.message} onChange={upd("message")} maxLength={1000} rows={3}/></div>
-          <Button type="submit" disabled={loading} className="w-full bg-gradient-brand text-white border-0">{loading ? "..." : tr("reg_submit")}</Button>
+          <Button type="submit" disabled={loading} className="w-full bg-primary text-primary-foreground border-0">{loading ? "..." : tr("reg_submit")}</Button>
         </form>
       </DialogContent>
     </Dialog>
