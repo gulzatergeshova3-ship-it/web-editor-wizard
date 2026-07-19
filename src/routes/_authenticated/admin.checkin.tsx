@@ -4,7 +4,9 @@ import { Html5Qrcode } from "html5-qrcode";
 import { CheckCircle2, XCircle, AlertTriangle, Camera, CameraOff, ScanLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
+
 
 export const Route = createFileRoute("/_authenticated/admin/checkin")({ component: Page });
 
