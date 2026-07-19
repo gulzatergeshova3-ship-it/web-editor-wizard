@@ -3,13 +3,14 @@ import { useI18n } from "@/lib/i18n";
 
 export function Countdown({ target }: { target: string }) {
   const { tr } = useI18n();
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState<number | null>(null);
   useEffect(() => {
+    setNow(Date.now());
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, []);
   const t = new Date(target).getTime();
-  const diff = Math.max(0, t - now);
+  const diff = now === null ? 0 : Math.max(0, t - now);
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff % 86400000) / 3600000);
   const minutes = Math.floor((diff % 3600000) / 60000);
