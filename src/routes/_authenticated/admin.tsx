@@ -20,6 +20,7 @@ const nav = [
   { to: "/admin/program", label: "Программа", icon: Calendar },
   { to: "/admin/partners", label: "Партнёры", icon: Building2 },
   { to: "/admin/footer", label: "Footer Settings", icon: PanelBottom },
+  { to: "/admin/email-settings", label: "Email (Resend)", icon: Mail },
   { to: "/admin/registrations", label: "Заявки (raw)", icon: Mail },
 ];
 

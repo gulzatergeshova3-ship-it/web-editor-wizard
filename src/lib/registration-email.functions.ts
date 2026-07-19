@@ -69,7 +69,10 @@ async function updateStatus(id: string, patch: Record<string, unknown>) {
 export const sendRegistrationEmail = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => schema.parse(d))
   .handler(async ({ data }) => {
-    const apiKey = process.env.RESEND_API_KEY;
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: secretRow } = await (supabaseAdmin.from("app_secrets") as any)
+      .select("value").eq("name", "resend_api_key").maybeSingle();
+    const apiKey = secretRow?.value || process.env.RESEND_API_KEY;
     const from = process.env.REGISTRATION_EMAIL_FROM ?? "Science Tech 2026 <onboarding@resend.dev>";
 
     if (!apiKey) {
