@@ -71,9 +71,6 @@
   --sidebar-border: oklch(0.88 0.04 220);
   --sidebar-ring: oklch(0.72 0.13 220);
 
-  --gradient-brand: linear-gradient(90deg, oklch(0.18 0.01 240), oklch(0.72 0.13 220));
-  --gradient-hero: linear-gradient(135deg, oklch(0.97 0.02 220) 0%, oklch(0.92 0.05 220) 100%);
-  --shadow-brand: 0 20px 60px -20px oklch(0.72 0.13 220 / 0.4);
 }
 
 .dark {
@@ -114,24 +111,6 @@
   h1, h2, h3, h4 { letter-spacing: -0.02em; }
 }
 
-@utility text-gradient-brand {
-  background-image: var(--gradient-brand);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-@utility bg-gradient-brand {
-  background-image: var(--gradient-brand);
-}
-
-@utility bg-hero {
-  background-image: var(--gradient-hero);
-}
-
-@utility shadow-brand {
-  box-shadow: var(--shadow-brand);
-}
 
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
