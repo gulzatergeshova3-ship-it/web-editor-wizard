@@ -108,7 +108,7 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
             );
           })}
         </div>
-        <Link to="/auth" className="text-xs text-muted-foreground hover:text-foreground">{tr("admin")}</Link>
+        
       </div>
 
       {/* Bottom bar */}
