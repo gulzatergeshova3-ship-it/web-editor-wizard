@@ -37,7 +37,7 @@ function Page() {
           <Label className="font-semibold">Дата и время события (для обратного отсчёта)</Label>
           <Input type="datetime-local" value={hero.event_date ? new Date(hero.event_date).toISOString().slice(0,16) : ""} onChange={(e) => setHero({ ...hero, event_date: new Date(e.target.value).toISOString() })}/>
         </div>
-        <Button onClick={save} disabled={loading} className="bg-gradient-brand text-white border-0">{loading ? "..." : "Сохранить"}</Button>
+        <Button onClick={save} disabled={loading} className="bg-primary text-primary-foreground border-0">{loading ? "..." : "Сохранить"}</Button>
       </div>
     </div>
   );

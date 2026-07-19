@@ -114,7 +114,7 @@ function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header onRegister={() => {}} />
-      <main className="flex-1 bg-gradient-to-b from-background to-primary/5 py-10 md:py-16">
+      <main className="flex-1 bg-background py-10 md:py-16">
         <div className="mx-auto max-w-2xl px-4">
           <Link to="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-6">
             <ArrowLeft className="size-4" /> {tr("view_site")}
@@ -167,7 +167,7 @@ function RegisterPage() {
                   type="submit"
                   disabled={loading || !form.consent}
                   size="lg"
-                  className="w-full bg-gradient-brand text-white border-0 hover:opacity-90"
+                  className="w-full bg-primary text-primary-foreground border-0 hover:opacity-90"
                 >
                   {loading ? <Loader2 className="size-4 animate-spin" /> : tr("reg_submit")}
                 </Button>
