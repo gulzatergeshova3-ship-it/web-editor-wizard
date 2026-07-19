@@ -32,7 +32,7 @@ function Page() {
       <div className="mt-6 space-y-4">
         {items.map((it) => (
           <div key={it.id} className="rounded-xl border border-border bg-card p-5 space-y-4">
-            <div className="grid grid-cols-3 gap-3">
+            
             <div><Label>Порядок</Label><Input type="number" value={it.sort_order} onChange={(e) => upd(it.id, { sort_order: +e.target.value })}/></div>
             <ImageUpload label="Фотография" value={it.photo_url} folder="speakers" onChange={(url) => { upd(it.id, { photo_url: url }); supabase.from("speakers").update({ photo_url: url }).eq("id", it.id).then(() => {}); }}/>
             <LocalizedField label="Имя" value={it.name} onChange={(v) => upd(it.id, { name: v })}/>
