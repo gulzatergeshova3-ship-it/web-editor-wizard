@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { LayoutDashboard, Image, FileText, Layers, Users, Calendar, Building2, Mail, LogOut, Globe, Atom, ScanLine, UserCheck, PanelBottom } from "lucide-react";
+import { LayoutDashboard, Image, FileText, Layers, Users, Calendar, Building2, Mail, LogOut, Globe, Atom, ScanLine, UserCheck, PanelBottom, Menu, X } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
