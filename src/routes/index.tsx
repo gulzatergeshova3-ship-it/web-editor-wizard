@@ -49,15 +49,14 @@ function LandingPage() {
       <Header onRegister={() => setRegOpen(true)} />
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-hero">
-        <div className="absolute inset-0 opacity-50 pointer-events-none [background-image:linear-gradient(oklch(0.9_0.02_240/.4)_1px,transparent_1px),linear-gradient(90deg,oklch(0.9_0.02_240/.4)_1px,transparent_1px)] [background-size:48px_48px]"></div>
+      <section className="relative overflow-hidden bg-background">
         <div className="relative mx-auto max-w-7xl px-4 pt-16 lg:pt-24 pb-4 lg:pb-6 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
               <Atom className="size-3.5" /> {pickL(hero.badge, lang)}
             </span>
-            <h1 className="mt-5 text-4xl md:text-6xl font-bold leading-tight">
-              <span className="text-gradient-brand">{pickL(hero.title, lang)}</span>
+            <h1 className="mt-5 text-4xl md:text-6xl font-bold leading-tight text-primary">
+              {pickL(hero.title, lang)}
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">{pickL(hero.subtitle, lang)}</p>
 
@@ -79,10 +78,9 @@ function LandingPage() {
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-gradient-brand text-white border-0 shadow-brand">
+              <Button asChild size="lg" className="bg-primary text-primary-foreground border-0">
                 <Link to="/register">{tr("register_long")}</Link>
               </Button>
-
             </div>
           </div>
 
@@ -122,7 +120,7 @@ function LandingPage() {
       <section id="about" className="py-20 bg-background">
         <div className="mx-auto max-w-4xl px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold">{pickL(about.title, lang)}</h2>
-          <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+          <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
           <div className="mt-8 space-y-4 text-muted-foreground text-left md:text-center">
             {pickLArray(about.paragraphs, lang).map((p, i) => <p key={i} className="leading-relaxed">{p}</p>)}
           </div>
@@ -140,9 +138,9 @@ function LandingPage() {
             {sections.map((s) => {
               const Icon = iconMap[s.icon || "atom"] ?? Atom;
               return (
-                <div key={s.id} className="group rounded-2xl border border-border bg-card p-6 hover:shadow-brand transition">
+                <div key={s.id} className="group rounded-2xl border border-border bg-card p-6 hover:shadow-lg transition">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="size-12 rounded-xl bg-gradient-brand text-white grid place-items-center">
+                    <div className="size-12 rounded-xl bg-primary text-primary-foreground grid place-items-center">
                       <Icon className="size-6" />
                     </div>
                     <span className="text-3xl font-bold text-muted-foreground/30">{s.number}</span>
@@ -161,11 +159,11 @@ function LandingPage() {
         <div className="mx-auto max-w-4xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">{tr("program_title")}</h2>
-            <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+            <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
           </div>
           <div className="space-y-3">
             {program.map((p) => (
-              <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex gap-4 hover:shadow-brand transition">
+              <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex gap-4 hover:shadow-lg transition">
                 <div className="shrink-0 w-32 font-mono text-sm text-primary font-semibold pt-0.5">{p.time_label}</div>
                 <div>
                   <div className="font-semibold">{pickL(p.title, lang)}</div>
@@ -183,7 +181,7 @@ function LandingPage() {
         <div className="mx-auto max-w-7xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">{tr("speakers_title")}</h2>
-            <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+            <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {speakers.map((s, i) => {
@@ -194,7 +192,7 @@ function LandingPage() {
                   {s.photo_url ? (
                     <img src={s.photo_url} alt={localName} className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   ) : (
-                    <div className="absolute inset-0 grid place-items-center bg-gradient-brand text-white text-4xl font-bold">
+                    <div className="absolute inset-0 grid place-items-center bg-primary text-primary-foreground text-4xl font-bold">
                       {localName.split(" ").map(p => p[0]).slice(0, 2).join("")}
                     </div>
                   )}
@@ -216,10 +214,10 @@ function LandingPage() {
         <div className="mx-auto max-w-7xl px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold">{tr("partners_title")}</h2>
-            <div className="mx-auto mt-3 h-1 w-16 bg-gradient-brand rounded-full"></div>
+            <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
           </div>
         </div>
-        <div className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <div className="group relative overflow-hidden">
           <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
             {[...partners, ...partners].map((p, i) => (
               <a
