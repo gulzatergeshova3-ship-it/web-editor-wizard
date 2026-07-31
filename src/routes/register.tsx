@@ -192,7 +192,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function SuccessCard({ data }: { data: SuccessData }) {
+function SuccessCard({ data, texts }: { data: SuccessData; texts: { title: string; msg: string } }) {
   const { tr } = useI18n();
   const download = () => {
     const a = document.createElement("a");
@@ -206,8 +206,8 @@ function SuccessCard({ data }: { data: SuccessData }) {
       <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500">
         <CheckCircle2 className="size-9" />
       </div>
-      <h1 className="mt-5 text-2xl md:text-3xl font-bold">{tr("reg_success_title")}</h1>
-      <p className="mt-3 text-muted-foreground max-w-lg mx-auto">{tr("reg_success_msg")}</p>
+      <h1 className="mt-5 text-2xl md:text-3xl font-bold">{texts.title}</h1>
+      <p className="mt-3 text-muted-foreground max-w-lg mx-auto">{texts.msg}</p>
 
       <div className="mt-8 inline-block rounded-2xl bg-white p-4 shadow-lg ring-1 ring-border">
         <img src={data.qrDataUrl} alt="QR" className="size-56 md:size-64" />
