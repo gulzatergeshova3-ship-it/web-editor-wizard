@@ -136,6 +136,7 @@ export type Database = {
           email_error: string | null
           email_sent_at: string | null
           email_status: string | null
+          extra: Json
           full_name: string
           id: string
           message: string | null
@@ -156,6 +157,7 @@ export type Database = {
           email_error?: string | null
           email_sent_at?: string | null
           email_status?: string | null
+          extra?: Json
           full_name: string
           id?: string
           message?: string | null
@@ -176,6 +178,7 @@ export type Database = {
           email_error?: string | null
           email_sent_at?: string | null
           email_status?: string | null
+          extra?: Json
           full_name?: string
           id?: string
           message?: string | null
