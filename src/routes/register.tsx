@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useI18n } from "@/lib/i18n";
+import { useI18n, pickL } from "@/lib/i18n";
 import { settingsQuery } from "@/lib/queries";
 import { toast } from "sonner";
 import { sendRegistrationEmail } from "@/lib/registration-email.functions";
@@ -37,8 +37,10 @@ interface SuccessData {
 }
 
 function RegisterPage() {
-  const { tr } = useI18n();
+  const { tr, lang } = useI18n();
   const { data: settings } = useSuspenseQuery(settingsQuery);
+  const rp = settings.register_page ?? {};
+  const t = (key: string, fallback: string) => pickL(rp[key], lang) || fallback;
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
 

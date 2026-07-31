@@ -19,6 +19,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminSpeakersRouteImport } from './routes/_authenticated/admin.speakers'
 import { Route as AuthenticatedAdminSectionsRouteImport } from './routes/_authenticated/admin.sections'
 import { Route as AuthenticatedAdminRegistrationsRouteImport } from './routes/_authenticated/admin.registrations'
+import { Route as AuthenticatedAdminRegisterPageRouteImport } from './routes/_authenticated/admin.register-page'
 import { Route as AuthenticatedAdminProgramRouteImport } from './routes/_authenticated/admin.program'
 import { Route as AuthenticatedAdminPartnersRouteImport } from './routes/_authenticated/admin.partners'
 import { Route as AuthenticatedAdminParticipantsRouteImport } from './routes/_authenticated/admin.participants'
@@ -78,6 +79,12 @@ const AuthenticatedAdminRegistrationsRoute =
   AuthenticatedAdminRegistrationsRouteImport.update({
     id: '/registrations',
     path: '/registrations',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminRegisterPageRoute =
+  AuthenticatedAdminRegisterPageRouteImport.update({
+    id: '/register-page',
+    path: '/register-page',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
 const AuthenticatedAdminProgramRoute =
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/program': typeof AuthenticatedAdminProgramRoute
+  '/admin/register-page': typeof AuthenticatedAdminRegisterPageRoute
   '/admin/registrations': typeof AuthenticatedAdminRegistrationsRoute
   '/admin/sections': typeof AuthenticatedAdminSectionsRoute
   '/admin/speakers': typeof AuthenticatedAdminSpeakersRoute
@@ -159,6 +167,7 @@ export interface FileRoutesByTo {
   '/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/admin/program': typeof AuthenticatedAdminProgramRoute
+  '/admin/register-page': typeof AuthenticatedAdminRegisterPageRoute
   '/admin/registrations': typeof AuthenticatedAdminRegistrationsRoute
   '/admin/sections': typeof AuthenticatedAdminSectionsRoute
   '/admin/speakers': typeof AuthenticatedAdminSpeakersRoute
@@ -180,6 +189,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/participants': typeof AuthenticatedAdminParticipantsRoute
   '/_authenticated/admin/partners': typeof AuthenticatedAdminPartnersRoute
   '/_authenticated/admin/program': typeof AuthenticatedAdminProgramRoute
+  '/_authenticated/admin/register-page': typeof AuthenticatedAdminRegisterPageRoute
   '/_authenticated/admin/registrations': typeof AuthenticatedAdminRegistrationsRoute
   '/_authenticated/admin/sections': typeof AuthenticatedAdminSectionsRoute
   '/_authenticated/admin/speakers': typeof AuthenticatedAdminSpeakersRoute
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/admin/participants'
     | '/admin/partners'
     | '/admin/program'
+    | '/admin/register-page'
     | '/admin/registrations'
     | '/admin/sections'
     | '/admin/speakers'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/admin/participants'
     | '/admin/partners'
     | '/admin/program'
+    | '/admin/register-page'
     | '/admin/registrations'
     | '/admin/sections'
     | '/admin/speakers'
@@ -239,6 +251,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/participants'
     | '/_authenticated/admin/partners'
     | '/_authenticated/admin/program'
+    | '/_authenticated/admin/register-page'
     | '/_authenticated/admin/registrations'
     | '/_authenticated/admin/sections'
     | '/_authenticated/admin/speakers'
@@ -325,6 +338,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRegistrationsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/register-page': {
+      id: '/_authenticated/admin/register-page'
+      path: '/register-page'
+      fullPath: '/admin/register-page'
+      preLoaderRoute: typeof AuthenticatedAdminRegisterPageRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/program': {
       id: '/_authenticated/admin/program'
       path: '/program'
@@ -393,6 +413,7 @@ interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminParticipantsRoute: typeof AuthenticatedAdminParticipantsRoute
   AuthenticatedAdminPartnersRoute: typeof AuthenticatedAdminPartnersRoute
   AuthenticatedAdminProgramRoute: typeof AuthenticatedAdminProgramRoute
+  AuthenticatedAdminRegisterPageRoute: typeof AuthenticatedAdminRegisterPageRoute
   AuthenticatedAdminRegistrationsRoute: typeof AuthenticatedAdminRegistrationsRoute
   AuthenticatedAdminSectionsRoute: typeof AuthenticatedAdminSectionsRoute
   AuthenticatedAdminSpeakersRoute: typeof AuthenticatedAdminSpeakersRoute
@@ -408,6 +429,7 @@ const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminParticipantsRoute: AuthenticatedAdminParticipantsRoute,
   AuthenticatedAdminPartnersRoute: AuthenticatedAdminPartnersRoute,
   AuthenticatedAdminProgramRoute: AuthenticatedAdminProgramRoute,
+  AuthenticatedAdminRegisterPageRoute: AuthenticatedAdminRegisterPageRoute,
   AuthenticatedAdminRegistrationsRoute: AuthenticatedAdminRegistrationsRoute,
   AuthenticatedAdminSectionsRoute: AuthenticatedAdminSectionsRoute,
   AuthenticatedAdminSpeakersRoute: AuthenticatedAdminSpeakersRoute,
@@ -438,13 +460,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
