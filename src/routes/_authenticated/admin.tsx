@@ -19,6 +19,7 @@ const nav = [
   { to: "/admin/sections", label: "Направления", icon: Layers },
   { to: "/admin/speakers", label: "Спикеры", icon: Users },
   { to: "/admin/program", label: "Программа", icon: Calendar },
+  { to: "/admin/register-page", label: "Страница регистрации", icon: FileText },
   { to: "/admin/partners", label: "Партнёры", icon: Building2 },
   { to: "/admin/footer", label: "Footer Settings", icon: PanelBottom },
   { to: "/admin/email-settings", label: "Email (Resend)", icon: Mail },
