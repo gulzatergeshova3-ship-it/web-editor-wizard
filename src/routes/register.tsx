@@ -123,36 +123,36 @@ function RegisterPage() {
           </Link>
 
           {success ? (
-            <SuccessCard data={success} />
+            <SuccessCard data={success} texts={{ title: t("success_title", tr("reg_success_title")), msg: t("success_msg", tr("reg_success_msg")) }} />
           ) : (
             <div className="rounded-2xl border border-border bg-card p-6 md:p-10 shadow-xl">
               <div className="flex items-center gap-3 mb-6">
                 <img src={logo.url} alt="" className="h-10 w-auto" />
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold">{tr("reg_dialog_title")}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold">{t("title", tr("reg_dialog_title"))}</h1>
               <p className="text-muted-foreground mt-2 text-sm">
-                <Calendar className="inline size-4 mr-1" /> 18.09.2026 · <MapPin className="inline size-4 mr-1" /> Бишкек
+                <Calendar className="inline size-4 mr-1" /> {t("subtitle", "18.09.2026 · Бишкек")}
               </p>
 
               <form onSubmit={submit} className="mt-8 space-y-4">
-                <Field label={`${tr("reg_full_name")} *`}>
+                <Field label={`${t("f_full_name", tr("reg_full_name"))} *`}>
                   <Input required maxLength={120} value={form.full_name} onChange={upd("full_name")} />
                 </Field>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <Field label={`${tr("reg_email")} *`}>
+                  <Field label={`${t("f_email", tr("reg_email"))} *`}>
                     <Input required type="email" maxLength={200} value={form.email} onChange={upd("email")} />
                   </Field>
-                  <Field label={`${tr("reg_phone")} *`}>
+                  <Field label={`${t("f_phone", tr("reg_phone"))} *`}>
                     <Input required type="tel" maxLength={40} value={form.phone} onChange={upd("phone")} />
                   </Field>
                 </div>
-                <Field label={`${tr("reg_org")} *`}>
+                <Field label={`${t("f_org", tr("reg_org"))} *`}>
                   <Input required maxLength={200} value={form.organization} onChange={upd("organization")} />
                 </Field>
-                <Field label={`${tr("reg_position")} *`}>
+                <Field label={`${t("f_position", tr("reg_position"))} *`}>
                   <Input required maxLength={150} value={form.position} onChange={upd("position")} />
                 </Field>
-                <Field label={`${tr("reg_country")} *`}>
+                <Field label={`${t("f_country", tr("reg_country"))} *`}>
                   <Input required maxLength={100} value={form.country} onChange={upd("country")} />
                 </Field>
 
@@ -162,7 +162,7 @@ function RegisterPage() {
                     onCheckedChange={(v) => setForm((f) => ({ ...f, consent: v === true }))}
                     className="mt-0.5"
                   />
-                  <span className="text-sm text-muted-foreground leading-relaxed">{tr("reg_consent")}</span>
+                  <span className="text-sm text-muted-foreground leading-relaxed">{t("consent", tr("reg_consent"))}</span>
                 </label>
 
                 <Button
@@ -171,7 +171,7 @@ function RegisterPage() {
                   size="lg"
                   className="w-full bg-primary text-primary-foreground border-0 hover:opacity-90"
                 >
-                  {loading ? <Loader2 className="size-4 animate-spin" /> : tr("reg_submit")}
+                  {loading ? <Loader2 className="size-4 animate-spin" /> : t("submit", tr("reg_submit"))}
                 </Button>
               </form>
             </div>
