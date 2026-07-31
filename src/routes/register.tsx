@@ -7,10 +7,12 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useI18n, pickL } from "@/lib/i18n";
 import { settingsQuery } from "@/lib/queries";
+import { normalizeFields } from "@/lib/register-fields";
 import { toast } from "sonner";
 import { sendRegistrationEmail } from "@/lib/registration-email.functions";
 import { createRegistration } from "@/lib/registration.functions";
@@ -41,38 +43,40 @@ function RegisterPage() {
   const { data: settings } = useSuspenseQuery(settingsQuery);
   const rp = settings.register_page ?? {};
   const t = (key: string, fallback: string) => pickL(rp[key], lang) || fallback;
+  const fields = normalizeFields(settings.register_fields).filter((f) => f.enabled);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
+  const [values, setValues] = useState<Record<string, string>>({});
+  const [consent, setConsent] = useState(false);
 
-  const [form, setForm] = useState({
-    full_name: "",
-    email: "",
-    phone: "",
-    organization: "",
-    position: "",
-    country: "",
-    consent: false,
-  });
-
-  const upd = (k: string) => (e: React.ChangeEvent<HTMLInputElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
+  const set = (k: string, v: string) => setValues((s) => ({ ...s, [k]: v }));
+  const get = (k: string) => values[k] ?? "";
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.consent) {
+    if (!consent) {
       toast.error(tr("reg_consent"));
       return;
     }
     setLoading(true);
     try {
+      const extra: Record<string, string> = {};
+      for (const f of fields) {
+        if (!f.builtin) {
+          const v = get(f.key).trim();
+          if (v) extra[f.key] = v.slice(0, 1000);
+        }
+      }
+
       const data = await createRegistration({
         data: {
-        full_name: form.full_name.trim(),
-        email: form.email.trim().toLowerCase(),
-        phone: form.phone.trim() || null,
-        organization: form.organization.trim() || null,
-        position: form.position.trim() || null,
-        country: form.country.trim() || null,
+          full_name: get("full_name").trim(),
+          email: get("email").trim().toLowerCase(),
+          phone: get("phone").trim() || null,
+          organization: get("organization").trim() || null,
+          position: get("position").trim() || null,
+          country: get("country").trim() || null,
+          extra,
         },
       });
 
@@ -112,7 +116,6 @@ function RegisterPage() {
     }
   };
 
-
   return (
     <div className="min-h-screen flex flex-col">
       <Header onRegister={() => {}} />
@@ -135,31 +138,47 @@ function RegisterPage() {
               </p>
 
               <form onSubmit={submit} className="mt-8 space-y-4">
-                <Field label={`${t("f_full_name", tr("reg_full_name"))} *`}>
-                  <Input required maxLength={120} value={form.full_name} onChange={upd("full_name")} />
-                </Field>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <Field label={`${t("f_email", tr("reg_email"))} *`}>
-                    <Input required type="email" maxLength={200} value={form.email} onChange={upd("email")} />
-                  </Field>
-                  <Field label={`${t("f_phone", tr("reg_phone"))} *`}>
-                    <Input required type="tel" maxLength={40} value={form.phone} onChange={upd("phone")} />
-                  </Field>
-                </div>
-                <Field label={`${t("f_org", tr("reg_org"))} *`}>
-                  <Input required maxLength={200} value={form.organization} onChange={upd("organization")} />
-                </Field>
-                <Field label={`${t("f_position", tr("reg_position"))} *`}>
-                  <Input required maxLength={150} value={form.position} onChange={upd("position")} />
-                </Field>
-                <Field label={`${t("f_country", tr("reg_country"))} *`}>
-                  <Input required maxLength={100} value={form.country} onChange={upd("country")} />
-                </Field>
+                {fields.map((f) => {
+                  const label = `${pickL(f.label, lang) || f.key}${f.required ? " *" : ""}`;
+                  return (
+                    <Field key={f.key} label={label}>
+                      {f.type === "textarea" ? (
+                        <Textarea
+                          required={f.required}
+                          maxLength={1000}
+                          rows={3}
+                          value={get(f.key)}
+                          onChange={(e) => set(f.key, e.target.value)}
+                        />
+                      ) : f.type === "select" ? (
+                        <select
+                          required={f.required}
+                          className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"
+                          value={get(f.key)}
+                          onChange={(e) => set(f.key, e.target.value)}
+                        >
+                          <option value="">—</option>
+                          {(f.options ?? []).map((o) => (
+                            <option key={o} value={o}>{o}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <Input
+                          required={f.required}
+                          type={f.type === "email" ? "email" : f.type === "tel" ? "tel" : "text"}
+                          maxLength={200}
+                          value={get(f.key)}
+                          onChange={(e) => set(f.key, e.target.value)}
+                        />
+                      )}
+                    </Field>
+                  );
+                })}
 
                 <label className="flex items-start gap-3 pt-2 cursor-pointer">
                   <Checkbox
-                    checked={form.consent}
-                    onCheckedChange={(v) => setForm((f) => ({ ...f, consent: v === true }))}
+                    checked={consent}
+                    onCheckedChange={(v) => setConsent(v === true)}
                     className="mt-0.5"
                   />
                   <span className="text-sm text-muted-foreground leading-relaxed">{t("consent", tr("reg_consent"))}</span>
@@ -167,7 +186,7 @@ function RegisterPage() {
 
                 <Button
                   type="submit"
-                  disabled={loading || !form.consent}
+                  disabled={loading || !consent}
                   size="lg"
                   className="w-full bg-primary text-primary-foreground border-0 hover:opacity-90"
                 >
@@ -182,6 +201,7 @@ function RegisterPage() {
     </div>
   );
 }
+
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
