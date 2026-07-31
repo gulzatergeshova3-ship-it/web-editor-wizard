@@ -8,6 +8,7 @@ const registrationInputSchema = z.object({
   organization: z.string().trim().max(200).optional().nullable(),
   position: z.string().trim().max(150).optional().nullable(),
   country: z.string().trim().max(100).optional().nullable(),
+  extra: z.record(z.string(), z.string().max(1000)).optional().nullable(),
 });
 
 export const createRegistration = createServerFn({ method: "POST" })
@@ -22,6 +23,7 @@ export const createRegistration = createServerFn({ method: "POST" })
       organization: data.organization?.trim() || null,
       position: data.position?.trim() || null,
       country: data.country?.trim() || null,
+      extra: data.extra ?? {},
     };
 
     const { data: registration, error } = await (supabaseAdmin.from("registrations") as any)
