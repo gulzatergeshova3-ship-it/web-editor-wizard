@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { Globe } from "lucide-react";
 import logo from "@/assets/science-tech-logo-t.png.asset.json";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 export function Header({ onRegister: _onRegister }: { onRegister?: () => void } = {}) {
   const { tr, lang, setLang } = useI18n();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const onHome = pathname === "/";
   const links = [
     { href: "#about", label: tr("nav_about") },
     { href: "#sections", label: tr("nav_sections") },
@@ -23,7 +25,7 @@ export function Header({ onRegister: _onRegister }: { onRegister?: () => void } 
         </Link>
         <nav className="hidden lg:flex items-center gap-6 ml-6 text-sm">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-muted-foreground hover:text-foreground transition">{l.label}</a>
+            <a key={l.href} href={onHome ? l.href : `/${l.href}`} className="text-muted-foreground hover:text-foreground transition">{l.label}</a>
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
