@@ -18,6 +18,7 @@ const nav = [
   { to: "/admin/about", label: "О конференции", icon: FileText },
   { to: "/admin/sections", label: "Направления", icon: Layers },
   { to: "/admin/speakers", label: "Спикеры", icon: Users },
+  { to: "/admin/articles", label: "Научные статьи и доклады", icon: FileText },
   { to: "/admin/program", label: "Программа", icon: Calendar },
   { to: "/admin/register-page", label: "Страница регистрации", icon: FileText },
   { to: "/admin/partners", label: "Партнёры", icon: Building2 },

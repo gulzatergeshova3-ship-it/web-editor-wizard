@@ -49,6 +49,17 @@ export const programQuery = queryOptions({
   },
 });
 
+export interface Article { id: string; sort_order: number; name: LocalizedText; title: LocalizedText; bio: LocalizedText; photo_url: string | null; url: string | null }
+
+export const articlesQuery = queryOptions({
+  queryKey: ["articles"],
+  queryFn: async () => {
+    const { data, error } = await supabase.from("articles").select("*").order("sort_order");
+    if (error) throw error;
+    return (data ?? []) as unknown as Article[];
+  },
+});
+
 export const partnersQuery = queryOptions({
   queryKey: ["partners"],
   queryFn: async () => {

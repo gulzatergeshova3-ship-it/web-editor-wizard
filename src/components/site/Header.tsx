@@ -14,6 +14,7 @@ export function Header({ onRegister: _onRegister }: { onRegister?: () => void } 
     { href: "#sections", label: tr("nav_sections") },
     { href: "#program", label: tr("nav_program") },
     { href: "#speakers", label: tr("nav_speakers") },
+    { href: "#articles", label: tr("nav_articles") },
     { href: "#partners", label: tr("nav_partners") },
     { href: "#contacts", label: tr("nav_contacts") },
   ];
