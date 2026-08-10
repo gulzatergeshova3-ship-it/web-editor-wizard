@@ -115,21 +115,34 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const flush = async (target: Lang) => {
     const texts = Array.from(pending.current);
     pending.current.clear();
+    console.log("[i18n] flush", texts.length, target);
     if (!texts.length || target === "ru") return;
     try {
       const { translateTexts } = await import("@/lib/translate.functions");
-      const res = await translateTexts({ data: { lang: target as "en" | "kg", texts } });
-      const add: Record<string, string> = {};
-      for (const [src, out] of Object.entries(res ?? {})) add[`${target}|${src}`] = out as string;
-      if (Object.keys(add).length) {
-        setCache((c) => {
-          const next = { ...c, ...add };
-          try { localStorage.setItem(STORE_KEY, JSON.stringify(next)); } catch { /* ignore */ }
-          return next;
-        });
+      const chunks: string[][] = [];
+      for (let i = 0; i < texts.length; i += 40) chunks.push(texts.slice(i, i + 40));
+      for (const chunk of chunks) {
+        try {
+          const res = await translateTexts({ data: { lang: target as "en" | "kg", texts: chunk } });
+          const add: Record<string, string> = {};
+          for (const [src, out] of Object.entries(res ?? {})) add[`${target}|${src}`] = out as string;
+          if (Object.keys(add).length) {
+            setCache((c) => {
+              const next = { ...c, ...add };
+              try { localStorage.setItem(STORE_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+              return next;
+            });
+          }
+        } catch (e) {
+          console.error("translate chunk failed", e);
+          for (const s of chunk) asked.current.delete(`${target}|${s}`);
+        }
       }
-    } catch { /* ignore */ }
+    } catch (e) {
+      console.error("translate failed", e);
+    }
   };
+
 
   const queue = (text: string, target: Lang) => {
     if (typeof window === "undefined") return;
