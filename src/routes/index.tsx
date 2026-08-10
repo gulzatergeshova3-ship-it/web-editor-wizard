@@ -8,7 +8,7 @@ import { Footer } from "@/components/site/Footer";
 import { Countdown } from "@/components/site/Countdown";
 import { RegistrationDialog } from "@/components/site/RegistrationDialog";
 import { settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery, articlesQuery } from "@/lib/queries";
-import { useI18n, pickL, pickLArray } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 import atom3dAsset from "@/assets/atom-3d.png.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/")({
 const iconMap: Record<string, any> = { brain: Brain, leaf: Leaf, heart: Heart, building: Building2, atom: Atom };
 
 function LandingPage() {
-  const { lang, tr } = useI18n();
+  const { lang, tr, L, LA } = useI18n();
   const [regOpen, setRegOpen] = useState(false);
   const [{ data: settings }, { data: sections }, { data: speakers }, { data: program }, { data: partners }, { data: articles }] = useSuspenseQueries({
     queries: [settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery, articlesQuery],

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Linkedin, Instagram, Send, Facebook, Youtube, Calendar } from "lucide-react";
-import { useI18n, pickL } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 
 const socialIcons: Record<string, any> = {
   linkedin: Linkedin,
@@ -11,7 +11,7 @@ const socialIcons: Record<string, any> = {
 };
 
 export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
-  const { lang, tr } = useI18n();
+  const { lang, tr, L } = useI18n();
   const f = footer ?? {};
   const main = f.main ?? {};
   const c = { ...(contacts ?? {}), ...(f.contacts ?? {}) };

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useI18n, pickL } from "@/lib/i18n";
+import { useI18n } from "@/lib/i18n";
 import { settingsQuery } from "@/lib/queries";
 import { normalizeFields } from "@/lib/register-fields";
 import { toast } from "sonner";
@@ -39,7 +39,7 @@ interface SuccessData {
 }
 
 function RegisterPage() {
-  const { tr, lang } = useI18n();
+  const { tr, lang, L } = useI18n();
   const { data: settings } = useSuspenseQuery(settingsQuery);
   const rp = settings.register_page ?? {};
   const t = (key: string, fallback: string) => L(rp[key]) || fallback;
