@@ -27,6 +27,7 @@ import { Route as AuthenticatedAdminHeroRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAdminFooterRouteImport } from './routes/_authenticated/admin.footer'
 import { Route as AuthenticatedAdminEmailSettingsRouteImport } from './routes/_authenticated/admin.email-settings'
 import { Route as AuthenticatedAdminCheckinRouteImport } from './routes/_authenticated/admin.checkin'
+import { Route as AuthenticatedAdminArticlesRouteImport } from './routes/_authenticated/admin.articles'
 import { Route as AuthenticatedAdminAboutRouteImport } from './routes/_authenticated/admin.about'
 
 const SetupAdminRoute = SetupAdminRouteImport.update({
@@ -128,6 +129,12 @@ const AuthenticatedAdminCheckinRoute =
     path: '/checkin',
     getParentRoute: () => AuthenticatedAdminRoute,
   } as any)
+const AuthenticatedAdminArticlesRoute =
+  AuthenticatedAdminArticlesRouteImport.update({
+    id: '/articles',
+    path: '/articles',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminAboutRoute = AuthenticatedAdminAboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/setup-admin': typeof SetupAdminRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
   '/admin/email-settings': typeof AuthenticatedAdminEmailSettingsRoute
   '/admin/footer': typeof AuthenticatedAdminFooterRoute
@@ -160,6 +168,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/setup-admin': typeof SetupAdminRoute
   '/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/admin/checkin': typeof AuthenticatedAdminCheckinRoute
   '/admin/email-settings': typeof AuthenticatedAdminEmailSettingsRoute
   '/admin/footer': typeof AuthenticatedAdminFooterRoute
@@ -182,6 +191,7 @@ export interface FileRoutesById {
   '/setup-admin': typeof SetupAdminRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/about': typeof AuthenticatedAdminAboutRoute
+  '/_authenticated/admin/articles': typeof AuthenticatedAdminArticlesRoute
   '/_authenticated/admin/checkin': typeof AuthenticatedAdminCheckinRoute
   '/_authenticated/admin/email-settings': typeof AuthenticatedAdminEmailSettingsRoute
   '/_authenticated/admin/footer': typeof AuthenticatedAdminFooterRoute
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
     | '/setup-admin'
     | '/admin'
     | '/admin/about'
+    | '/admin/articles'
     | '/admin/checkin'
     | '/admin/email-settings'
     | '/admin/footer'
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/setup-admin'
     | '/admin/about'
+    | '/admin/articles'
     | '/admin/checkin'
     | '/admin/email-settings'
     | '/admin/footer'
@@ -244,6 +256,7 @@ export interface FileRouteTypes {
     | '/setup-admin'
     | '/_authenticated/admin'
     | '/_authenticated/admin/about'
+    | '/_authenticated/admin/articles'
     | '/_authenticated/admin/checkin'
     | '/_authenticated/admin/email-settings'
     | '/_authenticated/admin/footer'
@@ -394,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminCheckinRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/articles': {
+      id: '/_authenticated/admin/articles'
+      path: '/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AuthenticatedAdminArticlesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/about': {
       id: '/_authenticated/admin/about'
       path: '/about'
@@ -406,6 +426,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminAboutRoute: typeof AuthenticatedAdminAboutRoute
+  AuthenticatedAdminArticlesRoute: typeof AuthenticatedAdminArticlesRoute
   AuthenticatedAdminCheckinRoute: typeof AuthenticatedAdminCheckinRoute
   AuthenticatedAdminEmailSettingsRoute: typeof AuthenticatedAdminEmailSettingsRoute
   AuthenticatedAdminFooterRoute: typeof AuthenticatedAdminFooterRoute
@@ -422,6 +443,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminAboutRoute: AuthenticatedAdminAboutRoute,
+  AuthenticatedAdminArticlesRoute: AuthenticatedAdminArticlesRoute,
   AuthenticatedAdminCheckinRoute: AuthenticatedAdminCheckinRoute,
   AuthenticatedAdminEmailSettingsRoute: AuthenticatedAdminEmailSettingsRoute,
   AuthenticatedAdminFooterRoute: AuthenticatedAdminFooterRoute,
@@ -460,13 +482,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

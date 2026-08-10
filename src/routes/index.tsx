@@ -7,7 +7,7 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Countdown } from "@/components/site/Countdown";
 import { RegistrationDialog } from "@/components/site/RegistrationDialog";
-import { settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery } from "@/lib/queries";
+import { settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery, articlesQuery } from "@/lib/queries";
 import { useI18n, pickL, pickLArray } from "@/lib/i18n";
 import atom3dAsset from "@/assets/atom-3d.png.asset.json";
 
@@ -26,6 +26,7 @@ export const Route = createFileRoute("/")({
     context.queryClient.ensureQueryData(speakersQuery);
     context.queryClient.ensureQueryData(programQuery);
     context.queryClient.ensureQueryData(partnersQuery);
+    context.queryClient.ensureQueryData(articlesQuery);
   },
   component: LandingPage,
   errorComponent: ({ error }) => <div className="p-8 text-center">Error: {error.message}</div>,
@@ -37,8 +38,8 @@ const iconMap: Record<string, any> = { brain: Brain, leaf: Leaf, heart: Heart, b
 function LandingPage() {
   const { lang, tr } = useI18n();
   const [regOpen, setRegOpen] = useState(false);
-  const [{ data: settings }, { data: sections }, { data: speakers }, { data: program }, { data: partners }] = useSuspenseQueries({
-    queries: [settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery],
+  const [{ data: settings }, { data: sections }, { data: speakers }, { data: program }, { data: partners }, { data: articles }] = useSuspenseQueries({
+    queries: [settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery, articlesQuery],
   });
   const hero = settings.hero ?? {};
   const about = settings.about ?? {};
@@ -205,6 +206,45 @@ function LandingPage() {
                 <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{pickL(s.bio, lang)}</p>
               </div>
             );})}
+          </div>
+        </div>
+      </section>
+
+      {/* ARTICLES */}
+      <section id="articles" className="py-20">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold">{tr("articles_title")}</h2>
+            <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {articles.map((a, i) => {
+              const localName = pickL(a.name, lang) || "";
+              const card = (
+                <div className="group">
+                  <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-muted">
+                    {a.photo_url ? (
+                      <img src={a.photo_url} alt={localName} loading="lazy" className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    ) : (
+                      <div className="absolute inset-0 grid place-items-center bg-primary text-primary-foreground text-4xl font-bold">
+                        {localName.split(" ").map(p => p[0]).slice(0, 2).join("")}
+                      </div>
+                    )}
+                    <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4 text-[11px] font-mono tracking-[0.2em] text-white uppercase drop-shadow-md">
+                      <span>DOC · {String(i + 1).padStart(2, "0")}</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 font-semibold text-base">{localName}</div>
+                  <div className="text-sm text-primary mt-1">{pickL(a.title, lang)}</div>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{pickL(a.bio, lang)}</p>
+                </div>
+              );
+              return a.url ? (
+                <a key={a.id} href={a.url} target="_blank" rel="noreferrer">{card}</a>
+              ) : (
+                <div key={a.id}>{card}</div>
+              );
+            })}
           </div>
         </div>
       </section>
