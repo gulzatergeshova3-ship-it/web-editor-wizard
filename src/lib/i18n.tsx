@@ -115,6 +115,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const flush = async (target: Lang) => {
     const texts = Array.from(pending.current);
     pending.current.clear();
+    console.log("[i18n] flush", texts.length, target);
     if (!texts.length || target === "ru") return;
     try {
       const { translateTexts } = await import("@/lib/translate.functions");
