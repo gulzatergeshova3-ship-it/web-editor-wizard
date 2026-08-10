@@ -124,8 +124,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     try {
       const { translateTexts } = await import("@/lib/translate.functions");
       const chunks: string[][] = [];
-      for (let i = 0; i < texts.length; i += 40) chunks.push(texts.slice(i, i + 40));
-      for (const chunk of chunks) {
+      for (let i = 0; i < texts.length; i += 10) chunks.push(texts.slice(i, i + 10));
+
+      const runChunk = async (chunk: string[]) => {
         try {
           const res = await translateTexts({ data: { lang: target, texts: chunk } });
           const add: Record<string, string> = {};
@@ -137,11 +138,24 @@ export function I18nProvider({ children }: { children: ReactNode }) {
               return next;
             });
           }
+          // any string the model skipped can be retried later
+          for (const s of chunk) if (!(s in (res ?? {}))) asked.current.delete(`${target}|${s}`);
         } catch (e) {
           console.error("Translation chunk failed", e);
           for (const s of chunk) asked.current.delete(`${target}|${s}`);
         }
-      }
+      };
+
+      // run up to 4 chunks in parallel
+      const queueCopy = [...chunks];
+      const workers = Array.from({ length: Math.min(4, queueCopy.length) }, async () => {
+        for (;;) {
+          const chunk = queueCopy.shift();
+          if (!chunk) return;
+          await runChunk(chunk);
+        }
+      });
+      await Promise.all(workers);
     } catch (e) {
       console.error("Translation failed", e);
     }
@@ -155,8 +169,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     asked.current.add(key);
     pending.current[target].add(text);
     if (timers.current[target]) clearTimeout(timers.current[target]);
-    timers.current[target] = setTimeout(() => flush(target), 150);
+    timers.current[target] = setTimeout(() => flush(target as "en" | "kg"), 400);
   };
+
 
   const auto = (base: string): string => {
     if (!base || lang === "ru") return base;
