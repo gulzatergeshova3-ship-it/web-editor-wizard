@@ -59,6 +59,42 @@ export type Database = {
         }
         Relationships: []
       }
+      articles: {
+        Row: {
+          bio: Json
+          created_at: string
+          id: string
+          name: Json
+          photo_url: string | null
+          sort_order: number
+          title: Json
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          bio?: Json
+          created_at?: string
+          id?: string
+          name?: Json
+          photo_url?: string | null
+          sort_order?: number
+          title?: Json
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          bio?: Json
+          created_at?: string
+          id?: string
+          name?: Json
+          photo_url?: string | null
+          sort_order?: number
+          title?: Json
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           created_at: string
