@@ -25,16 +25,16 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
       <div className="mx-auto max-w-7xl px-4 py-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
         {/* Main */}
         <div>
-          <div className="text-lg font-bold">{pickL(main.name, lang) || "SCIENCE TECH 2026"}</div>
-          {pickL(main.subtitle, lang) && (
-            <div className="mt-1 text-sm text-muted-foreground">{pickL(main.subtitle, lang)}</div>
+          <div className="text-lg font-bold">{L(main.name) || "SCIENCE TECH 2026"}</div>
+          {L(main.subtitle) && (
+            <div className="mt-1 text-sm text-muted-foreground">{L(main.subtitle)}</div>
           )}
-          {pickL(main.tagline, lang) && (
-            <p className="mt-3 text-sm">{pickL(main.tagline, lang)}</p>
+          {L(main.tagline) && (
+            <p className="mt-3 text-sm">{L(main.tagline)}</p>
           )}
-          {pickL(main.event_date, lang) && (
+          {L(main.event_date) && (
             <div className="mt-4 inline-flex items-center gap-2 text-sm text-muted-foreground">
-              <Calendar className="size-4" /> {pickL(main.event_date, lang)}
+              <Calendar className="size-4" /> {L(main.event_date)}
             </div>
           )}
         </div>
@@ -52,9 +52,9 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
               <Phone className="size-4" /> {c.phone}
             </a>
           )}
-          {pickL(c.address, lang) && (
+          {L(c.address) && (
             <a href={c.maps_url || "#"} target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 hover:text-foreground text-muted-foreground">
-              <MapPin className="size-4 mt-0.5" /> <span>{pickL(c.address, lang)}</span>
+              <MapPin className="size-4 mt-0.5" /> <span>{L(c.address)}</span>
             </a>
           )}
         </div>
@@ -67,7 +67,7 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
               {quickLinks.map((l: any) => (
                 <li key={l.id}>
                   <a href={l.url} className="text-muted-foreground hover:text-foreground">
-                    {pickL(l.label, lang) || l.url}
+                    {L(l.label) || l.url}
                   </a>
                 </li>
               ))}

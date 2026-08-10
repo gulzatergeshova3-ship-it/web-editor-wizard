@@ -54,26 +54,26 @@ function LandingPage() {
         <div className="relative mx-auto max-w-7xl px-4 pt-16 lg:pt-24 pb-4 lg:pb-6 grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
-              <Atom className="size-3.5" /> {pickL(hero.badge, lang)}
+              <Atom className="size-3.5" /> {L(hero.badge)}
             </span>
             <h1 className="mt-5 text-4xl md:text-6xl font-bold leading-tight text-primary">
-              {pickL(hero.title, lang)}
+              {L(hero.title)}
             </h1>
-            <p className="mt-4 text-lg text-muted-foreground">{pickL(hero.subtitle, lang)}</p>
+            <p className="mt-4 text-lg text-muted-foreground">{L(hero.subtitle)}</p>
 
             <div className="mt-8 grid sm:grid-cols-2 gap-3">
               <div className="rounded-xl border border-border bg-card p-4 flex gap-3">
                 <Calendar className="size-5 text-primary mt-0.5" />
                 <div>
                   <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{tr("event_date_label")}</div>
-                  <div className="font-semibold text-sm">{pickL(hero.date_label, lang)}</div>
+                  <div className="font-semibold text-sm">{L(hero.date_label)}</div>
                 </div>
               </div>
               <div className="rounded-xl border border-border bg-card p-4 flex gap-3">
                 <MapPin className="size-5 text-primary mt-0.5" />
                 <div>
                   <div className="text-[11px] uppercase tracking-wider text-muted-foreground">{tr("location_label")}</div>
-                  <div className="font-semibold text-sm">{pickL(hero.location, lang)}</div>
+                  <div className="font-semibold text-sm">{L(hero.location)}</div>
                 </div>
               </div>
             </div>
@@ -120,10 +120,10 @@ function LandingPage() {
       {/* ABOUT */}
       <section id="about" className="py-20 bg-background">
         <div className="mx-auto max-w-4xl px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold">{pickL(about.title, lang)}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold">{L(about.title)}</h2>
           <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
           <div className="mt-8 space-y-4 text-muted-foreground text-left md:text-center">
-            {pickLArray(about.paragraphs, lang).map((p, i) => <p key={i} className="leading-relaxed">{p}</p>)}
+            {LA(about.paragraphs).map((p, i) => <p key={i} className="leading-relaxed">{p}</p>)}
           </div>
         </div>
       </section>
@@ -146,8 +146,8 @@ function LandingPage() {
                     </div>
                     <span className="text-3xl font-bold text-muted-foreground/30">{s.number}</span>
                   </div>
-                  <h3 className="font-semibold text-lg">{pickL(s.title, lang)}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">{pickL(s.description, lang)}</p>
+                  <h3 className="font-semibold text-lg">{L(s.title)}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{L(s.description)}</p>
                 </div>
               );
             })}
@@ -167,8 +167,8 @@ function LandingPage() {
               <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex gap-4 hover:shadow-lg transition">
                 <div className="shrink-0 w-32 font-mono text-sm text-primary font-semibold pt-0.5">{p.time_label}</div>
                 <div>
-                  <div className="font-semibold">{pickL(p.title, lang)}</div>
-                  {pickL(p.description, lang) && <div className="text-sm text-muted-foreground mt-1">{pickL(p.description, lang)}</div>}
+                  <div className="font-semibold">{L(p.title)}</div>
+                  {L(p.description) && <div className="text-sm text-muted-foreground mt-1">{L(p.description)}</div>}
                   {p.speaker && <div className="text-xs text-primary mt-2">→ {p.speaker}</div>}
                 </div>
               </div>
@@ -186,7 +186,7 @@ function LandingPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {speakers.map((s, i) => {
-              const localName = pickL(s.name, lang) || "";
+              const localName = L(s.name) || "";
               return (
               <div key={s.id} className="group">
                 <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-muted">
@@ -202,8 +202,8 @@ function LandingPage() {
                   </div>
                 </div>
                 <div className="mt-4 font-semibold text-base">{localName}</div>
-                <div className="text-sm text-primary mt-1">{pickL(s.title, lang)}</div>
-                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{pickL(s.bio, lang)}</p>
+                <div className="text-sm text-primary mt-1">{L(s.title)}</div>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{L(s.bio)}</p>
               </div>
             );})}
           </div>
@@ -219,7 +219,7 @@ function LandingPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {articles.map((a, i) => {
-              const localName = pickL(a.name, lang) || "";
+              const localName = L(a.name) || "";
               const card = (
                 <div className="group">
                   <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-muted">
@@ -235,8 +235,8 @@ function LandingPage() {
                     </div>
                   </div>
                   <div className="mt-4 font-semibold text-base">{localName}</div>
-                  <div className="text-sm text-primary mt-1">{pickL(a.title, lang)}</div>
-                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{pickL(a.bio, lang)}</p>
+                  <div className="text-sm text-primary mt-1">{L(a.title)}</div>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{L(a.bio)}</p>
                 </div>
               );
               return a.url ? (

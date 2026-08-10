@@ -42,7 +42,7 @@ function RegisterPage() {
   const { tr, lang } = useI18n();
   const { data: settings } = useSuspenseQuery(settingsQuery);
   const rp = settings.register_page ?? {};
-  const t = (key: string, fallback: string) => pickL(rp[key], lang) || fallback;
+  const t = (key: string, fallback: string) => L(rp[key]) || fallback;
   const fields = normalizeFields(settings.register_fields).filter((f) => f.enabled);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SuccessData | null>(null);
@@ -139,7 +139,7 @@ function RegisterPage() {
 
               <form onSubmit={submit} className="mt-8 space-y-4">
                 {fields.map((f) => {
-                  const label = `${pickL(f.label, lang) || f.key}${f.required ? " *" : ""}`;
+                  const label = `${L(f.label) || f.key}${f.required ? " *" : ""}`;
                   return (
                     <Field key={f.key} label={label}>
                       {f.type === "textarea" ? (
