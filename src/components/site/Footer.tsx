@@ -78,14 +78,14 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
         {/* Organizers */}
         {organizers.length > 0 && (
           <div className="text-sm">
-            <div className="font-semibold mb-3">{tr("organizers") || "Организаторы"}</div>
+            <div className="font-semibold mb-3">{tr("organizers")}</div>
             <div className="grid grid-cols-2 gap-3">
               {organizers.map((o: any) => (
                 <div key={o.id} className="flex flex-col items-center gap-1">
                   {o.logo_url && (
-                    <img src={o.logo_url} alt={o.name} className="h-12 object-contain" />
+                    <img src={o.logo_url} alt={L(o.name)} className="h-12 object-contain" />
                   )}
-                  {o.name && <div className="text-[11px] text-muted-foreground text-center">{o.name}</div>}
+                  {o.name && <div className="text-[11px] text-muted-foreground text-center">{L(o.name)}</div>}
                 </div>
               ))}
             </div>
@@ -113,9 +113,9 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
 
       {/* Bottom bar */}
       <div className="border-t border-border py-4 text-center text-xs text-muted-foreground space-y-1">
-        {bottom.copyright && <div>{bottom.copyright}</div>}
-        {bottom.made_by && <div>{bottom.made_by}</div>}
-        {bottom.extra && <div>{bottom.extra}</div>}
+        {bottom.copyright && <div>{L(bottom.copyright)}</div>}
+        {bottom.made_by && <div>{L(bottom.made_by)}</div>}
+        {bottom.extra && <div>{L(bottom.extra)}</div>}
       </div>
     </footer>
   );
