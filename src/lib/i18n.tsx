@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 
 export type Lang = "ru" | "en" | "kg";
 
@@ -191,3 +191,5 @@ export function pickLArray(value: unknown, lang: Lang): string[] {
   const v = value as Record<string, string[]>;
   return v[lang] || v.ru || v.en || [];
 }
+
+export function useI18n() { return useContext(I18nContext); }
