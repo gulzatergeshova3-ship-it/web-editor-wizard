@@ -39,7 +39,7 @@ interface SuccessData {
 }
 
 function RegisterPage() {
-  const { tr, lang, L } = useI18n();
+  const { tr, L } = useI18n();
   const { data: settings } = useSuspenseQuery(settingsQuery);
   const rp = settings.register_page ?? {};
   const t = (key: string, fallback: string) => L(rp[key]) || fallback;

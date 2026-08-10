@@ -36,7 +36,7 @@ export const Route = createFileRoute("/")({
 const iconMap: Record<string, any> = { brain: Brain, leaf: Leaf, heart: Heart, building: Building2, atom: Atom };
 
 function LandingPage() {
-  const { lang, tr, L, LA } = useI18n();
+  const { tr, L, LA } = useI18n();
   const [regOpen, setRegOpen] = useState(false);
   const [{ data: settings }, { data: sections }, { data: speakers }, { data: program }, { data: partners }, { data: articles }] = useSuspenseQueries({
     queries: [settingsQuery, sectionsQuery, speakersQuery, programQuery, partnersQuery, articlesQuery],

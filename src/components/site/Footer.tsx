@@ -11,7 +11,7 @@ const socialIcons: Record<string, any> = {
 };
 
 export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
-  const { lang, tr, L } = useI18n();
+  const { tr, L } = useI18n();
   const f = footer ?? {};
   const main = f.main ?? {};
   const c = { ...(contacts ?? {}), ...(f.contacts ?? {}) };
