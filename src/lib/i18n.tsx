@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 
 export type Lang = "ru" | "en" | "kg";
 
@@ -72,25 +72,109 @@ export const t: Dict = {
 
 };
 
-interface I18nCtx { lang: Lang; setLang: (l: Lang) => void; tr: (k: string) => string; }
+interface I18nCtx {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  tr: (k: string) => string;
+  /** Localized value with automatic machine translation fallback */
+  L: (value: unknown) => string;
+  LA: (value: unknown) => string[];
+}
 
-const I18nContext = createContext<I18nCtx>({ lang: "ru", setLang: () => {}, tr: (k) => k });
+const I18nContext = createContext<I18nCtx>({
+  lang: "ru",
+  setLang: () => {},
+  tr: (k) => k,
+  L: (v) => pickL(v, "ru"),
+  LA: (v) => pickLArray(v, "ru"),
+});
+
+const STORE_KEY = "auto_tr_v1";
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ru");
+  const [cache, setCache] = useState<Record<string, string>>({});
+  const pending = useRef<Set<string>>(new Set());
+  const asked = useRef<Set<string>>(new Set());
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     const saved = typeof window !== "undefined" ? (localStorage.getItem("lang") as Lang | null) : null;
     if (saved && ["ru", "en", "kg"].includes(saved)) setLangState(saved);
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (raw) setCache(JSON.parse(raw));
+    } catch { /* ignore */ }
   }, []);
+
   const setLang = (l: Lang) => {
     setLangState(l);
     if (typeof window !== "undefined") localStorage.setItem("lang", l);
   };
+
+  const flush = async (target: Lang) => {
+    const texts = Array.from(pending.current);
+    pending.current.clear();
+    if (!texts.length || target === "ru") return;
+    try {
+      const { translateTexts } = await import("@/lib/translate.functions");
+      const res = await translateTexts({ data: { lang: target as "en" | "kg", texts } });
+      const add: Record<string, string> = {};
+      for (const [src, out] of Object.entries(res ?? {})) add[`${target}|${src}`] = out as string;
+      if (Object.keys(add).length) {
+        setCache((c) => {
+          const next = { ...c, ...add };
+          try { localStorage.setItem(STORE_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+          return next;
+        });
+      }
+    } catch { /* ignore */ }
+  };
+
+  const queue = (text: string, target: Lang) => {
+    if (typeof window === "undefined") return;
+    const key = `${target}|${text}`;
+    if (asked.current.has(key)) return;
+    asked.current.add(key);
+    pending.current.add(text);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => flush(target), 200);
+  };
+
+  const auto = (base: string): string => {
+    if (!base || lang === "ru") return base;
+    const hit = cache[`${lang}|${base}`];
+    if (hit) return hit;
+    queue(base, lang);
+    return base;
+  };
+
+  const L = (value: unknown): string => {
+    if (!value) return "";
+    if (typeof value === "string") return auto(value);
+    if (typeof value === "object") {
+      const v = value as Record<string, string>;
+      const own = v[lang];
+      if (own && own.trim()) return own;
+      const base = v.ru || v.en || Object.values(v).find((x) => typeof x === "string" && x.trim()) || "";
+      return auto(base);
+    }
+    return String(value);
+  };
+
+  const LA = (value: unknown): string[] => {
+    if (Array.isArray(value)) return value.map((x) => auto(String(x)));
+    if (!value || typeof value !== "object") return [];
+    const v = value as Record<string, string[]>;
+    const own = v[lang];
+    if (own && own.length) return own;
+    return (v.ru || v.en || []).map((x) => auto(x));
+  };
+
   const tr = (k: string) => t[k]?.[lang] ?? k;
-  return <I18nContext.Provider value={{ lang, setLang, tr }}>{children}</I18nContext.Provider>;
+  return <I18nContext.Provider value={{ lang, setLang, tr, L, LA }}>{children}</I18nContext.Provider>;
 }
 
-export function useI18n() { return useContext(I18nContext); }
 
 export function pickL(value: unknown, lang: Lang): string {
   if (!value) return "";
@@ -107,3 +191,5 @@ export function pickLArray(value: unknown, lang: Lang): string[] {
   const v = value as Record<string, string[]>;
   return v[lang] || v.ru || v.en || [];
 }
+
+export function useI18n() { return useContext(I18nContext); }
