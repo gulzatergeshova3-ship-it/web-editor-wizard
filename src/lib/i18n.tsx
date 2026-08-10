@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 
 export type Lang = "ru" | "en" | "kg";
 
@@ -69,6 +69,7 @@ export const t: Dict = {
   delete: { ru: "Удалить", en: "Delete", kg: "Өчүрүү" },
   add: { ru: "Добавить", en: "Add", kg: "Кошуу" },
   quick_links: { ru: "Конференция", en: "Conference", kg: "Конференция" },
+  organizers: { ru: "Организаторы", en: "Organizers", kg: "Уюштуруучулар" },
 
 };
 
@@ -94,9 +95,9 @@ const STORE_KEY = "auto_tr_v1";
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("ru");
   const [cache, setCache] = useState<Record<string, string>>({});
-  const pending = useRef<Set<string>>(new Set());
+  const pending = useRef<Record<"en" | "kg", Set<string>>>({ en: new Set(), kg: new Set() });
   const asked = useRef<Set<string>>(new Set());
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timers = useRef<Record<"en" | "kg", ReturnType<typeof setTimeout> | null>>({ en: null, kg: null });
 
   useEffect(() => {
     const saved = typeof window !== "undefined" ? (localStorage.getItem("lang") as Lang | null) : null;
@@ -112,18 +113,21 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     if (typeof window !== "undefined") localStorage.setItem("lang", l);
   };
 
-  const flush = async (target: Lang) => {
-    const texts = Array.from(pending.current);
-    pending.current.clear();
-    console.log("[i18n] flush", texts.length, target);
-    if (!texts.length || target === "ru") return;
+  useEffect(() => {
+    document.documentElement.lang = lang === "kg" ? "ky" : lang;
+  }, [lang]);
+
+  const flush = useCallback(async (target: "en" | "kg") => {
+    const texts = Array.from(pending.current[target]);
+    pending.current[target].clear();
+    if (!texts.length) return;
     try {
       const { translateTexts } = await import("@/lib/translate.functions");
       const chunks: string[][] = [];
       for (let i = 0; i < texts.length; i += 40) chunks.push(texts.slice(i, i + 40));
       for (const chunk of chunks) {
         try {
-          const res = await translateTexts({ data: { lang: target as "en" | "kg", texts: chunk } });
+          const res = await translateTexts({ data: { lang: target, texts: chunk } });
           const add: Record<string, string> = {};
           for (const [src, out] of Object.entries(res ?? {})) add[`${target}|${src}`] = out as string;
           if (Object.keys(add).length) {
@@ -134,24 +138,24 @@ export function I18nProvider({ children }: { children: ReactNode }) {
             });
           }
         } catch (e) {
-          console.error("translate chunk failed", e);
+          console.error("Translation chunk failed", e);
           for (const s of chunk) asked.current.delete(`${target}|${s}`);
         }
       }
     } catch (e) {
-      console.error("translate failed", e);
+      console.error("Translation failed", e);
     }
-  };
+  }, []);
 
 
   const queue = (text: string, target: Lang) => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || target === "ru") return;
     const key = `${target}|${text}`;
     if (asked.current.has(key)) return;
     asked.current.add(key);
-    pending.current.add(text);
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => flush(target), 200);
+    pending.current[target].add(text);
+    if (timers.current[target]) clearTimeout(timers.current[target]);
+    timers.current[target] = setTimeout(() => flush(target), 150);
   };
 
   const auto = (base: string): string => {

@@ -169,7 +169,7 @@ function LandingPage() {
                 <div>
                   <div className="font-semibold">{L(p.title)}</div>
                   {L(p.description) && <div className="text-sm text-muted-foreground mt-1">{L(p.description)}</div>}
-                  {p.speaker && <div className="text-xs text-primary mt-2">→ {p.speaker}</div>}
+                  {p.speaker && <div className="text-xs text-primary mt-2">→ {L(p.speaker)}</div>}
                 </div>
               </div>
             ))}
@@ -265,18 +265,18 @@ function LandingPage() {
                 href={p.url || "#"}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={p.name}
+                aria-label={L(p.name)}
                 className="shrink-0 mx-[40px] md:mx-[50px] grid place-items-center"
               >
                 {p.logo_url ? (
                   <img
                     src={p.logo_url}
-                    alt={p.name}
+                    alt={L(p.name)}
                     className="h-10 md:h-14 w-auto object-contain"
                     loading="lazy"
                   />
                 ) : (
-                  <span className="font-semibold text-sm text-muted-foreground">{p.name}</span>
+                  <span className="font-semibold text-sm text-muted-foreground">{L(p.name)}</span>
                 )}
               </a>
             ))}

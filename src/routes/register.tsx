@@ -159,7 +159,7 @@ function RegisterPage() {
                         >
                           <option value="">—</option>
                           {(f.options ?? []).map((o) => (
-                            <option key={o} value={o}>{o}</option>
+                            <option key={o} value={o}>{L(o)}</option>
                           ))}
                         </select>
                       ) : (
