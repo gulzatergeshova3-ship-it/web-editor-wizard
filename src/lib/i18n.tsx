@@ -51,9 +51,9 @@ export const t: Dict = {
   reg_submit: { ru: "Зарегистрироваться", en: "Register", kg: "Катталуу" },
   reg_success_title: { ru: "Спасибо за регистрацию!", en: "Thank you for registering!", kg: "Катталууңуз үчүн рахмат!" },
   reg_success_msg: {
-    ru: "На ваш email отправлено письмо с подтверждением и персональным QR-кодом. Пожалуйста, сохраните QR-код — он понадобится для входа на конференцию.",
-    en: "A confirmation email with your personal QR code has been sent. Please keep the QR code — you will need it to enter the conference.",
-    kg: "Электрондук почтаңызга ырастоо каты жана жеке QR-кодуңуз жөнөтүлдү. QR-кодду сактап коюңуз — ал конференцияга кирүү үчүн керек болот.",
+    ru: "Сохраните ваш персональный QR-код. Он будет использоваться для регистрации участников при входе в день конференции.",
+    en: "Please save your personal QR code. It will be used for registration at the entrance on the day of the conference.",
+    kg: "Өзүңүздүн жеке QR-кодуңузду сактап коюңуз. Ал конференция күнү кире бериште катышуучуларды каттоо үчүн колдонулат.",
   },
   reg_your_id: { ru: "Ваш регистрационный ID", en: "Your registration ID", kg: "Каттоо ID" },
   reg_download_qr: { ru: "Скачать QR-код", en: "Download QR code", kg: "QR-кодду жүктөө" },
