@@ -14,6 +14,8 @@ export const Route = createFileRoute("/_authenticated/admin/footer")({ component
 
 type LinkItem = { id: string; label: any; url: string; visible: boolean; sort_order: number };
 type OrgItem = { id: string; name: string; logo_url: string; sort_order: number };
+type ContactItem = { id: string; type: "email" | "phone" | "address" | "link"; value: string; label: any; sort_order: number };
+
 
 const emptyFooter = () => ({
   main: { name: {}, subtitle: {}, tagline: {}, event_date: {} },
