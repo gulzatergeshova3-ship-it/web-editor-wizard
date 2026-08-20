@@ -57,7 +57,28 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
               <MapPin className="size-4 mt-0.5" /> <span>{L(c.address)}</span>
             </a>
           )}
+          {(c.items ?? [])
+            .slice()
+            .sort((a: any, b: any) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+            .filter((it: any) => it?.value)
+            .map((it: any) => {
+              const Icon = it.type === "email" ? Mail : it.type === "phone" ? Phone : it.type === "address" ? MapPin : Send;
+              const href = it.type === "email" ? `mailto:${it.value}` : it.type === "phone" ? `tel:${it.value}` : it.type === "link" ? it.value : undefined;
+              const text = L(it.label) || it.value;
+              const content = (
+                <>
+                  <Icon className="size-4 mt-0.5" /> <span>{text}</span>
+                </>
+              );
+              return href ? (
+                <a key={it.id} href={href} target={it.type === "link" ? "_blank" : undefined} rel="noopener noreferrer"
+                   className="flex items-start gap-2 hover:text-foreground text-muted-foreground">{content}</a>
+              ) : (
+                <div key={it.id} className="flex items-start gap-2 text-muted-foreground">{content}</div>
+              );
+            })}
         </div>
+
 
         {/* Quick links */}
         {quickLinks.length > 0 && (

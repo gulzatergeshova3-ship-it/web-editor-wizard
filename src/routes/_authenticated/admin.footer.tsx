@@ -14,6 +14,8 @@ export const Route = createFileRoute("/_authenticated/admin/footer")({ component
 
 type LinkItem = { id: string; label: any; url: string; visible: boolean; sort_order: number };
 type OrgItem = { id: string; name: string; logo_url: string; sort_order: number };
+type ContactItem = { id: string; type: "email" | "phone" | "address" | "link"; value: string; label: any; sort_order: number };
+
 
 const emptyFooter = () => ({
   main: { name: {}, subtitle: {}, tagline: {}, event_date: {} },
@@ -47,6 +49,9 @@ function Page() {
 
   const updLinks = (next: LinkItem[]) => setF({ ...f, quick_links: next.map((l, i) => ({ ...l, sort_order: i + 1 })) });
   const updOrgs = (next: OrgItem[]) => setF({ ...f, organizers: next.map((o, i) => ({ ...o, sort_order: i + 1 })) });
+  const extra: ContactItem[] = useMemo(() => f.contacts?.items ?? [], [f]);
+  const updExtra = (next: ContactItem[]) => setF({ ...f, contacts: { ...f.contacts, items: next.map((c, i) => ({ ...c, sort_order: i + 1 })) } });
+
 
   const move = <T,>(arr: T[], i: number, dir: -1 | 1): T[] => {
     const j = i + dir;
@@ -92,7 +97,44 @@ function Page() {
           <Label>Google Maps (ссылка)</Label>
           <Input value={f.contacts?.maps_url ?? ""} onChange={(e) => setF({ ...f, contacts: { ...f.contacts, maps_url: e.target.value } })} />
         </div>
+
+        {/* Дополнительные контакты */}
+        <div className="pt-2 border-t border-border space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold">Дополнительные контакты</h3>
+            <Button variant="outline" size="sm" onClick={() => updExtra([...extra, { id: crypto.randomUUID(), type: "phone", value: "", label: {}, sort_order: extra.length + 1 }])}>
+              <Plus className="size-4 mr-1" /> Добавить
+            </Button>
+          </div>
+          {extra.map((c, i) => (
+            <div key={c.id} className="rounded-lg border border-border p-3 space-y-3">
+              <div className="flex items-start gap-2">
+                <div className="flex flex-col gap-1 pt-2">
+                  <button onClick={() => updExtra(move(extra, i, -1))} className="p-1 hover:bg-accent rounded" aria-label="up"><ArrowUp className="size-3" /></button>
+                  <button onClick={() => updExtra(move(extra, i, 1))} className="p-1 hover:bg-accent rounded" aria-label="down"><ArrowDown className="size-3" /></button>
+                </div>
+                <div className="flex-1 grid md:grid-cols-2 gap-2">
+                  <select
+                    className="h-10 rounded-md border border-input bg-background px-3 text-sm"
+                    value={c.type}
+                    onChange={(e) => updExtra(extra.map((x, k) => k === i ? { ...x, type: e.target.value as ContactItem["type"] } : x))}
+                  >
+                    <option value="email">Email</option>
+                    <option value="phone">Телефон</option>
+                    <option value="address">Адрес</option>
+                    <option value="link">Ссылка</option>
+                  </select>
+                  <Input placeholder="Значение (почта, номер, адрес, URL)" value={c.value} onChange={(e) => updExtra(extra.map((x, k) => k === i ? { ...x, value: e.target.value } : x))} />
+                </div>
+                <Button variant="ghost" size="icon" onClick={() => updExtra(extra.filter((_, k) => k !== i))}><Trash2 className="size-4 text-destructive" /></Button>
+              </div>
+              <LocalizedField label="Подпись (необязательно)" value={c.label} onChange={(v) => updExtra(extra.map((x, k) => k === i ? { ...x, label: v } : x))} />
+            </div>
+          ))}
+          {extra.length === 0 && <div className="text-sm text-muted-foreground">Пока нет дополнительных контактов</div>}
+        </div>
       </section>
+
 
       {/* QUICK LINKS */}
       <section className="rounded-xl border border-border bg-card p-5 space-y-4">
