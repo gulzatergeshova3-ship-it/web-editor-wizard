@@ -64,12 +64,17 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
             .map((it: any) => {
               const Icon = it.type === "email" ? Mail : it.type === "phone" ? Phone : it.type === "address" ? MapPin : Send;
               const href = it.type === "email" ? `mailto:${it.value}` : it.type === "phone" ? `tel:${it.value}` : it.type === "link" ? it.value : undefined;
-              const text = L(it.label) || it.value;
+              const label = L(it.label);
               const content = (
                 <>
-                  <Icon className="size-4 mt-0.5" /> <span>{text}</span>
+                  <Icon className="size-4 mt-0.5 shrink-0" />
+                  <span>
+                    {label && <span className="font-medium text-foreground">{label}: </span>}
+                    <span>{it.value}</span>
+                  </span>
                 </>
               );
+
               return href ? (
                 <a key={it.id} href={href} target={it.type === "link" ? "_blank" : undefined} rel="noopener noreferrer"
                    className="flex items-start gap-2 hover:text-foreground text-muted-foreground">{content}</a>
