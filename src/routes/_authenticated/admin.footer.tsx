@@ -49,6 +49,9 @@ function Page() {
 
   const updLinks = (next: LinkItem[]) => setF({ ...f, quick_links: next.map((l, i) => ({ ...l, sort_order: i + 1 })) });
   const updOrgs = (next: OrgItem[]) => setF({ ...f, organizers: next.map((o, i) => ({ ...o, sort_order: i + 1 })) });
+  const extra: ContactItem[] = useMemo(() => f.contacts?.items ?? [], [f]);
+  const updExtra = (next: ContactItem[]) => setF({ ...f, contacts: { ...f.contacts, items: next.map((c, i) => ({ ...c, sort_order: i + 1 })) } });
+
 
   const move = <T,>(arr: T[], i: number, dir: -1 | 1): T[] => {
     const j = i + dir;
