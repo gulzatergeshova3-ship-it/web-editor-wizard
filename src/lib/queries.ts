@@ -7,7 +7,7 @@ export interface LocalizedArray { ru?: string[]; en?: string[]; kg?: string[] }
 export interface SiteSetting { key: string; value: any; updated_at: string }
 export interface Section { id: string; sort_order: number; number: string | null; icon: string | null; title: LocalizedText; description: LocalizedText }
 export interface Speaker { id: string; sort_order: number; name: string; title: LocalizedText; bio: LocalizedText; photo_url: string | null }
-export interface ProgramItem { id: string; sort_order: number; time_label: string | null; title: LocalizedText; description: LocalizedText; speaker: string | null }
+export interface ProgramItem { id: string; sort_order: number; time_label: string | null; title: LocalizedText; description: LocalizedText; speaker: LocalizedText | string | null }
 export interface Partner { id: string; sort_order: number; name: string; logo_url: string | null; url: string | null; tier: string | null }
 export interface Registration { id: string; full_name: string; email: string; phone: string | null; organization: string | null; position: string | null; section: string | null; message: string | null; created_at: string }
 
