@@ -19,7 +19,7 @@ function Page() {
     const { error } = await supabase.from("program_items").update({ sort_order: it.sort_order, time_label: it.time_label, title: it.title, description: it.description, speaker: it.speaker }).eq("id", it.id);
     if (error) toast.error(error.message); else toast.success("Сохранено");
   };
-  const add = async () => { const { error } = await supabase.from("program_items").insert({ sort_order: items.length + 1, time_label: "", title: {}, description: {} }); if (error) toast.error(error.message); else load(); };
+  const add = async () => { const { error } = await supabase.from("program_items").insert({ sort_order: items.length + 1, time_label: "", title: {}, description: {}, speaker: {} } as any); if (error) toast.error(error.message); else load(); };
   const del = async (id: string) => { if (!confirm("Удалить?")) return; const { error } = await supabase.from("program_items").delete().eq("id", id); if (error) toast.error(error.message); else load(); };
 
   return (
