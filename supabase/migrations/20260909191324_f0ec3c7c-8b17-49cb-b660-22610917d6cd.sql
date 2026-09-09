@@ -1,0 +1,2 @@
+ALTER TABLE public.program_items ALTER COLUMN speaker TYPE jsonb USING CASE WHEN speaker IS NULL OR speaker = '' THEN '{}'::jsonb ELSE jsonb_build_object('ru', speaker) END;
+ALTER TABLE public.program_items ALTER COLUMN speaker SET DEFAULT '{}'::jsonb;
