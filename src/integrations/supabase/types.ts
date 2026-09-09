@@ -134,7 +134,7 @@ export type Database = {
           description: Json
           id: string
           sort_order: number
-          speaker: string | null
+          speaker: Json | null
           time_label: string | null
           title: Json
           updated_at: string
@@ -144,7 +144,7 @@ export type Database = {
           description?: Json
           id?: string
           sort_order?: number
-          speaker?: string | null
+          speaker?: Json | null
           time_label?: string | null
           title?: Json
           updated_at?: string
@@ -154,7 +154,7 @@ export type Database = {
           description?: Json
           id?: string
           sort_order?: number
-          speaker?: string | null
+          speaker?: Json | null
           time_label?: string | null
           title?: Json
           updated_at?: string
