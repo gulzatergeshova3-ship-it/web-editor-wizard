@@ -175,7 +175,7 @@ function LandingPage() {
               const spk = L(p.speaker as any);
               return (
                 <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex flex-col sm:flex-row gap-2 sm:gap-4 hover:shadow-lg transition">
-                  <div className="shrink-0 sm:w-32 font-mono text-sm text-primary font-semibold pt-0.5">{p.time_label}</div>
+                  <div className="shrink-0 sm:w-36 font-mono text-base text-primary font-semibold pt-0.5">{p.time_label}</div>
                   <div>
                     <div className="font-semibold">{L(p.title)}</div>
                     {L(p.description) && <div className="text-sm text-muted-foreground mt-1">{L(p.description)}</div>}
