@@ -163,16 +163,27 @@ function LandingPage() {
             <div className="mx-auto mt-3 h-1 w-16 bg-primary rounded-full"></div>
           </div>
           <div className="space-y-3">
-            {program.map((p) => (
-              <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex gap-4 hover:shadow-lg transition">
-                <div className="shrink-0 w-32 font-mono text-sm text-primary font-semibold pt-0.5">{p.time_label}</div>
-                <div>
-                  <div className="font-semibold">{L(p.title)}</div>
-                  {L(p.description) && <div className="text-sm text-muted-foreground mt-1">{L(p.description)}</div>}
-                  {p.speaker && <div className="text-xs text-primary mt-2">→ {L(p.speaker)}</div>}
+            {program.map((p) => {
+              if (!p.time_label) {
+                return (
+                  <div key={p.id} className="pt-6 pb-1">
+                    <div className="text-xs md:text-sm font-semibold tracking-[0.15em] uppercase text-primary">{L(p.title)}</div>
+                    <div className="mt-2 h-px w-full bg-border"></div>
+                  </div>
+                );
+              }
+              const spk = L(p.speaker as any);
+              return (
+                <div key={p.id} className="rounded-xl border border-border bg-card p-5 flex flex-col sm:flex-row gap-2 sm:gap-4 hover:shadow-lg transition">
+                  <div className="shrink-0 sm:w-32 font-mono text-sm text-primary font-semibold pt-0.5">{p.time_label}</div>
+                  <div>
+                    <div className="font-semibold">{L(p.title)}</div>
+                    {L(p.description) && <div className="text-sm text-muted-foreground mt-1">{L(p.description)}</div>}
+                    {spk && <div className="text-xs text-primary mt-2">→ {spk}</div>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
