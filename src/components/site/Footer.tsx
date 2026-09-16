@@ -142,11 +142,15 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
         {bottom.copyright && <div>{L(bottom.copyright)}</div>}
         {bottom.made_by && <div>{L(bottom.made_by)}</div>}
         {bottom.extra && <div>{L(bottom.extra)}</div>}
-        <div>
-          <Link to="/admin" className="hover:text-foreground transition">
+        <div className="pt-2">
+          <Link
+            to="/admin"
+            className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs text-foreground hover:bg-accent transition"
+          >
             {tr("admin")}
           </Link>
         </div>
+
       </div>
     </footer>
   );
