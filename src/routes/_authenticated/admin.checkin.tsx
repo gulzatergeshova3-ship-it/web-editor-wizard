@@ -20,6 +20,9 @@ function Page() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [manual, setManual] = useState("");
   const [scanning, setScanning] = useState(false);
+  const [search, setSearch] = useState("");
+  const [matches, setMatches] = useState<any[]>([]);
+  const [searching, setSearching] = useState(false);
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const lastRef = useRef<{ v: string; t: number }>({ v: "", t: 0 });
 
