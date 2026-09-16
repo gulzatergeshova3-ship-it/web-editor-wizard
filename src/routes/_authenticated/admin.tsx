@@ -14,6 +14,7 @@ const nav = [
   { to: "/admin", label: "Дашборд", icon: LayoutDashboard, exact: true },
   { to: "/admin/participants", label: "Participants", icon: UserCheck },
   { to: "/admin/checkin", label: "Check-in", icon: ScanLine },
+  { to: "/admin/team", label: "Команда (доступы)", icon: Users },
   { to: "/admin/hero", label: "Hero / шапка", icon: Image },
   { to: "/admin/about", label: "О конференции", icon: FileText },
   { to: "/admin/sections", label: "Направления", icon: Layers },
