@@ -185,6 +185,46 @@ function Page() {
         </div>
       </div>
 
+      {/* Поиск участника */}
+      <div className="mt-6 rounded-2xl border border-border bg-card p-4">
+        <div className="font-semibold mb-3">Поиск участника</div>
+        <Input
+          placeholder="Имя, email или Registration ID…"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        {searching && <div className="mt-3 text-sm text-muted-foreground">Поиск…</div>}
+        {!searching && search.trim().length >= 2 && matches.length === 0 && (
+          <div className="mt-3 text-sm text-muted-foreground">Никого не найдено</div>
+        )}
+        {matches.length > 0 && (
+          <ul className="mt-3 divide-y divide-border">
+            {matches.map((m) => (
+              <li key={m.id} className="py-2 flex items-center gap-3">
+                <div className="min-w-0 flex-1">
+                  <div className="font-medium truncate">{m.full_name}</div>
+                  <div className="text-xs text-muted-foreground truncate">
+                    {m.email}{m.organization ? ` · ${m.organization}` : ""}
+                  </div>
+                  <div className="text-xs font-mono text-muted-foreground">{m.registration_code}</div>
+                </div>
+                {m.checked_in_at ? (
+                  <span className="text-xs font-medium text-amber-600 shrink-0">Уже отмечен</span>
+                ) : (
+                  <Button
+                    size="sm"
+                    className="shrink-0"
+                    onClick={() => { process(m.registration_code); setSearch(""); setMatches([]); }}
+                  >
+                    Отметить
+                  </Button>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       {/* Mobile popup with scan result */}
       <Dialog open={popupOpen} onOpenChange={setPopupOpen}>
         <DialogContent className="md:hidden max-w-[92vw] p-4 gap-3">
