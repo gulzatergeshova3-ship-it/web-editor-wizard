@@ -128,6 +128,25 @@ function Page() {
 
   useEffect(() => () => { stopScan(); }, []);
 
+  // Live search by name / email / registration code
+  useEffect(() => {
+    const q = search.trim();
+    if (q.length < 2) { setMatches([]); return; }
+    setSearching(true);
+    const t = setTimeout(async () => {
+      const like = `%${q.replace(/[%_,]/g, " ")}%`;
+      const { data } = await supabase
+        .from("registrations")
+        .select("id, full_name, email, organization, registration_code, checked_in_at")
+        .or(`full_name.ilike.${like},email.ilike.${like},registration_code.ilike.${like}`)
+        .order("full_name")
+        .limit(8);
+      setMatches(data ?? []);
+      setSearching(false);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [search]);
+
   const submitManual = (e: React.FormEvent) => {
     e.preventDefault();
     if (manual.trim()) {
