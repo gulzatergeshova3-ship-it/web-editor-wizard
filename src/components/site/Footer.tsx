@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { Link } from "@tanstack/react-router";
 import { Mail, Phone, MapPin, Linkedin, Instagram, Send, Facebook, Youtube, Calendar } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
@@ -90,21 +91,21 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
           <div className="text-sm">
             <div className="font-semibold mb-2">{tr("quick_links")}</div>
             <ul className="space-y-1.5">
-              {quickLinks.map((l: any, i: number) => (
-                <>
-                  <li key={l.id}>
+              {quickLinks.map((l: any) => (
+                <Fragment key={l.id}>
+                  <li>
                     <a href={l.url} className="text-muted-foreground hover:text-foreground">
                       {L(l.label) || l.url}
                     </a>
                   </li>
                   {l.url === "/register" && (
-                    <li key="admin-link">
+                    <li>
                       <Link to="/admin" className="text-muted-foreground hover:text-foreground">
                         {tr("admin")}
                       </Link>
                     </li>
                   )}
-                </>
+                </Fragment>
               ))}
             </ul>
           </div>
