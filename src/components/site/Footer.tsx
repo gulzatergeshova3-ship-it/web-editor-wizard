@@ -90,12 +90,21 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
           <div className="text-sm">
             <div className="font-semibold mb-2">{tr("quick_links")}</div>
             <ul className="space-y-1.5">
-              {quickLinks.map((l: any) => (
-                <li key={l.id}>
-                  <a href={l.url} className="text-muted-foreground hover:text-foreground">
-                    {L(l.label) || l.url}
-                  </a>
-                </li>
+              {quickLinks.map((l: any, i: number) => (
+                <>
+                  <li key={l.id}>
+                    <a href={l.url} className="text-muted-foreground hover:text-foreground">
+                      {L(l.label) || l.url}
+                    </a>
+                  </li>
+                  {l.url === "/register" && (
+                    <li key="admin-link">
+                      <Link to="/admin" className="text-muted-foreground hover:text-foreground">
+                        {tr("admin")}
+                      </Link>
+                    </li>
+                  )}
+                </>
               ))}
             </ul>
           </div>
@@ -142,15 +151,6 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
         {bottom.copyright && <div>{L(bottom.copyright)}</div>}
         {bottom.made_by && <div>{L(bottom.made_by)}</div>}
         {bottom.extra && <div>{L(bottom.extra)}</div>}
-        <div className="pt-2">
-          <Link
-            to="/admin"
-            className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs text-foreground hover:bg-accent transition"
-          >
-            {tr("admin")}
-          </Link>
-        </div>
-
       </div>
     </footer>
   );
