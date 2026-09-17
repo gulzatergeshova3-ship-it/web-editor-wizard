@@ -69,6 +69,22 @@ export const t: Dict = {
   delete: { ru: "Удалить", en: "Delete", kg: "Өчүрүү" },
   add: { ru: "Добавить", en: "Add", kg: "Кошуу" },
   quick_links: { ru: "Конференция", en: "Conference", kg: "Конференция" },
+  cert_nav: { ru: "Сертификат", en: "Certificate", kg: "Сертификат" },
+  cert_title: { ru: "Электронный сертификат участника", en: "Electronic participant certificate", kg: "Катышуучунун электрондук сертификаты" },
+  cert_subtitle: {
+    ru: "Введите ваше ФИО, email или регистрационный ID. Сертификат доступен участникам, отмеченным на входе в день конференции.",
+    en: "Enter your full name, email or registration ID. The certificate is available to participants checked in on the conference day.",
+    kg: "Аты-жөнүңүздү, email же каттоо IDңизди жазыңыз. Сертификат конференция күнү катталган катышуучуларга жеткиликтүү.",
+  },
+  cert_input_label: { ru: "ФИО, email или ID", en: "Full name, email or ID", kg: "Аты-жөнү, email же ID" },
+  cert_get: { ru: "Получить сертификат", en: "Get certificate", kg: "Сертификат алуу" },
+  cert_download: { ru: "Скачать сертификат", en: "Download certificate", kg: "Сертификатты жүктөө" },
+  cert_not_found: { ru: "Участник не найден. Проверьте данные.", en: "Participant not found. Please check your details.", kg: "Катышуучу табылган жок. Маалыматты текшериңиз." },
+  cert_not_checked_in: {
+    ru: "Сертификат будет доступен после отметки на входе в день конференции.",
+    en: "The certificate will be available after check-in on the conference day.",
+    kg: "Сертификат конференция күнү кире бериште белгиленгенден кийин жеткиликтүү болот.",
+  },
   organizers: { ru: "Организаторы", en: "Organizers", kg: "Уюштуруучулар" },
 
 };
