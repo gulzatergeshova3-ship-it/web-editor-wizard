@@ -18,6 +18,8 @@ export const t: Dict = {
   nav_articles: { ru: "Статьи и доклады", en: "Papers & talks", kg: "Макалалар жана баяндамалар" },
   nav_partners: { ru: "Партнёры", en: "Partners", kg: "Өнөктөштөр" },
   nav_contacts: { ru: "Контакты", en: "Contacts", kg: "Байланыш" },
+  nav_title: { ru: "Меню", en: "Menu", kg: "Меню" },
+  menu: { ru: "Меню", en: "Menu", kg: "Меню" },
   register: { ru: "Регистрация", en: "Register", kg: "Катталуу" },
   register_long: { ru: "Зарегистрироваться", en: "Register now", kg: "Катталуу" },
   download_program: { ru: "Скачать программу", en: "Download program", kg: "Программаны жүктөө" },
