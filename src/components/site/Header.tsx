@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Globe } from "lucide-react";
+import { Globe, Menu } from "lucide-react";
 import logo from "@/assets/science-tech-logo-t.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { useI18n, LANGS, type Lang } from "@/lib/i18n";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 export function Header({ onRegister: _onRegister }: { onRegister?: () => void } = {}) {
   const { tr, lang, setLang } = useI18n();
