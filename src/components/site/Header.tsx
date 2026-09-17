@@ -30,6 +30,9 @@ export function Header({ onRegister: _onRegister }: { onRegister?: () => void } 
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-2">
+          <Button asChild variant="ghost" size="sm" className="hidden md:inline-flex">
+            <Link to="/certificate">{tr("cert_nav")}</Link>
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="gap-1.5">
