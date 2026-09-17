@@ -99,11 +99,18 @@ export function Footer({ contacts, footer }: { contacts?: any; footer?: any }) {
                     </a>
                   </li>
                   {l.url === "/register" && (
-                    <li>
-                      <Link to="/admin" className="text-muted-foreground hover:text-foreground">
-                        {tr("admin")}
-                      </Link>
-                    </li>
+                    <>
+                      <li>
+                        <Link to="/certificate" className="text-muted-foreground hover:text-foreground">
+                          {tr("cert_nav")}
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/admin" className="text-muted-foreground hover:text-foreground">
+                          {tr("admin")}
+                        </Link>
+                      </li>
+                    </>
                   )}
                 </Fragment>
               ))}
